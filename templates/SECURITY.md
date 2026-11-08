@@ -4,11 +4,15 @@
 
 ## About this document
 
-This document describes how the project handles security, what was checked, and how to report a vulnerability. It is generated from the security checklist in `security/checklist.md`.
+<project summary, no file paths>
+
+Checked against OWASP ASVS 5.0 Level 2, curated subset of 93 requirements, plus 12 additional practices.
+
+Last check: <YYYY-MM-DD>.
 
 ## Scope
 
-<project paragraph>
+- <condition key>: <applied | not applied>, <reason>
 
 This is a self-assessment based on the source code and configuration. It is not a penetration test and makes no claim that the system is free of vulnerabilities.
 
@@ -42,14 +46,15 @@ Open and partial items:
 
 ## Additional practices
 
-| Chapter | Checked | Implemented | Partial | Not implemented | n/a | Reference |
-|---|---|---|---|---|---|---|
-| <practice group> | <n> | <n> | <n> | <n> | <n> | <reference> |
-| Total | <n> | <n> | <n> | <n> | <n> | |
+| ID | Practice | Status | Reference |
+|---|---|---|---|
+| <AP-n> | <short practice> | <status> | <reference> |
 
 ## Reporting a vulnerability
 
-To report a vulnerability, contact the maintainers at <contact>. Expect a first response within <response time>. Please do not open a public issue for security problems.
+To report a vulnerability, contact <contact>. Expect a first response within <response time>.
+
+PGP key: <fingerprint or URL, or delete this line>
 
 ## Changes
 

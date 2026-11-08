@@ -5,7 +5,7 @@ description: Use when asked for an ASVS check, a security checklist, a security 
 
 # Security audit
 
-Checks a repository against a curated OWASP ASVS 5.0 Level 2 subset and twelve additional practices, from source and configuration. Needs only reading files, searching and shell commands. `reference/` and `templates/` are bundled; output paths are relative to the target repository root.
+Checks a repository against a curated OWASP ASVS 5.0 Level 2 subset and twelve additional practices, from source and configuration. Needs only reading files, searching and shell commands. `reference/` and `templates/` paths are relative to this skill's directory; output paths are relative to the target repository root.
 
 ## Outputs
 
@@ -24,16 +24,16 @@ Rows come only from `reference/asvs-checks.md` and `reference/additional-practic
 2. **Confirm the scope** in one question: the project picture paragraph, then "Conditions detected: ... Conditions not detected: ... Is this correct?" Inconclusive keys go into this question.
 3. **Read existing state.** If `security/checklist.md` exists, parse it.
    - `not implemented` and `partial` rows are re-checked.
-   - `implemented` rows get a cheap evidence check: the cited file still exists and the cited pattern or key is still present. If that fails, the row is re-checked in full. Otherwise it is kept with its date.
+   - `implemented` rows get a cheap evidence check: the cited file still exists and the cited pattern or key is still present; for a cited search, re-run it and compare the hit count. If that fails, the row is re-checked in full. Otherwise it is kept with its date.
    - `n/a` rows: fresh scope detection wins. If a conditional group was `n/a` and detection now finds the feature, the group is checked.
    - New requirements not in the existing file are checked.
    - The user may ask for a full re-check when invoking the skill; then every row is re-checked.
    - Every status change is recorded with date, old and new status in the "Changes" section.
-4. **Check.** Read the header of `reference/asvs-checks.md`. Per entry in scope, run "Where to look", apply "Implemented when" and "Not implemented when", fill every column. Commands: file search, `grep`, reading files, `git log -p` for AP-7, and a dependency audit (`composer audit`, `npm audit`, `pip-audit`) only if the tool is on PATH and the lock file exists. Otherwise V15.2.1 is `not implemented`, reason "not verifiable locally, run `<command>`".
+4. **Check.** Read the headers of `reference/asvs-checks.md` and `reference/additional-practices.md`. Per entry in scope, run "Where to look", apply "Implemented when" and "Not implemented when", fill every column. Commands: file search, `grep`, reading files, `git log` per the AP-7 recipe in `reference/additional-practices.md`, and a dependency audit (`composer audit`, `npm audit`, `pip-audit`) only if the tool is on PATH and the lock file exists. Otherwise V15.2.1 is `not implemented`, reason "not verifiable locally, run `<command>`".
 5. **Contact.** If `security/contact.md` is missing, ask once for contact address and response time (PGP key optional) and write it.
 6. **Write outputs** in one pass from the same data, so `SECURITY.md` numbers and dates match the checklist.
    - `security/TODO.md`: every `not implemented` and `partial` row; Level 1, Level 2, then practices headed `### AP-7 (AP) <short practice>`.
-   - `SECURITY.md` Checked = all rows of the chapter = implemented + partial + not implemented + n/a.
+   - `SECURITY.md`: the project summary is the project picture without file paths or line citations. Checked = all rows of the chapter = implemented + partial + not implemented + n/a. One row per practice. Changes newest first.
    - The generated block sits between `<!-- security-audit:start -->` and `<!-- security-audit:end -->`; everything outside is preserved byte for byte. Existing `SECURITY.md` without markers: ask once, replace or append.
 7. **Report** counts per status, open Level 1 items, paths written, and remind that `security/checklist.md` and `security/TODO.md` map unfixed weaknesses and should not be public while open items remain; `SECURITY.md` carries no file paths and is meant to be public.
 
@@ -41,9 +41,9 @@ Rows come only from `reference/asvs-checks.md` and `reference/additional-practic
 
 | Status | The row has |
 |---|---|
-| `implemented` | Evidence: `path:line` or config key. For absence of an unsafe pattern: the search (patterns, directories, hit count), plus a manifest `path:line` where relevant. For a framework default: the lock-file line of the installed version and the enabling config key. |
+| `implemented` | Evidence: `path:line` or config key. For absence of an unsafe pattern: the search (patterns, directories, hit count), plus a manifest `path:line` where relevant. For a framework default: the lock-file line of the installed version, plus the config file and key, or the middleware or package entry that enables it. |
 | `partial` | Evidence for part, and a reason naming what is missing. Sink-type and coverage-type requirements split `partial` from `not implemented` as the header defines. |
-| `not implemented` | A reason. Nothing found is `not implemented`, never `partial`. A violation is cited as evidence. |
+| `not implemented` | A reason. No evidence of the control is `not implemented`, never `partial`. A violation is cited as evidence. |
 | `n/a` | Why the feature does not exist. Undetected condition: whole group, reason "condition `<key>` not detected", search cited. Core rows need a specific reason. |
 
 Large codebase: sample routes, controllers, middleware, models; say so in the reason.
@@ -59,9 +59,9 @@ Never write a secret value into any output. Cite the path, and for git history t
 
 ## Writing rules
 
-Short sentences. Numbers, paths and dates instead of adjectives. A sentence that could stand in another project's `SECURITY.md` is removed, except fixed headings and the disclaimer. Empty section: one line "None yet." Replace every `<...>` placeholder.
+Short sentences. Numbers and dates instead of adjectives; in the internal files also paths. A sentence that could stand in another project's `SECURITY.md` is removed, except the fixed headings, the disclaimer, the "Checked against" sentence and the attribution line. Empty section: one line "None yet." Replace every `<...>` placeholder.
 
-Final self-check; exit 1 means clean, a match means rewrite and run again:
+Final self-check; exit 1 means clean, a match means rewrite and run again, exit 2 means a file is missing (an error):
 
 ```sh
 grep -n -i -E "robust|state[- ]of[- ]the[- ]art|best[- ]in[- ]class|industry[- ]leading|cutting[- ]edge|top priority|highest priority|takes? security seriously|committed to|world[- ]class|enterprise[- ]grade|military[- ]grade|bank[- ]level|not only|$(printf '\342\200\224')|$(printf '\342\200\223')" security/checklist.md security/TODO.md security/contact.md SECURITY.md

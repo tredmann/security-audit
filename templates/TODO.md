@@ -18,7 +18,7 @@ Suggestion: <one concrete action>
 
 ## Additional practices
 
-### <ID> (Level <n>) <short requirement>
+### <ID> (AP) <short practice>
 Status: <partial | not implemented>
 Found: <one or two sentences>
 Suggestion: <one concrete action>
