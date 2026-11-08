@@ -243,7 +243,7 @@ Hints are guidance, not a script. The agent is expected to follow the code if th
 
 ## Acceptance
 
-Primary target: the Tory project at `../tory` (sibling directory of this repo). Laravel 13 with Filament 5 (own login, so the V6 authentication block is exercised), Livewire, Sanctum and Passport (API tokens; JWT/OAuth conditional groups will be triggered), `compose.yaml`, `composer.lock` and `package-lock.json` present, PHPStan and Pest configured. The skill may write `security/` and `SECURITY.md` into that repo during testing; the outputs are reviewed by the user before any commit there.
+Primary target: the inv project at `../inv` (sibling directory of this repo). The Laravel 13 application lives in the `src/` subfolder (tests the skill on a nested layout). Jetstream with two-factor authentication (own login, so the V6 block and the `mfa` group are exercised), Livewire, Sanctum tokens, Octane, S3 storage (`uploads` likely), `docker-compose.yml`, `docker/Dockerfile`, `docker/Caddyfile` (`webserver-config` applies), `bitbucket-pipelines.yml` (`ci` applies, non-GitHub), `composer.lock` and `package-lock.json` present, PHPStan and Pest configured. The skill may write `security/` and `SECURITY.md` into that repo during testing; the outputs are reviewed by the user before any commit there. (Changed from the Tory project on 2026-11-08 because another session was working in Tory.)
 
 Secondary target, if time allows: OWASP Juice Shop (Node) to check stack neutrality.
 

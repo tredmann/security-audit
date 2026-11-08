@@ -6,7 +6,7 @@
 
 **Architecture:** This repository *is* the skill: `SKILL.md` at the root, `reference/` for the check catalog and detection heuristics, `templates/` for the output skeletons. No runtime code; the agent does the work by following `SKILL.md`. A `dev/` folder holds stdlib-only Python tooling used while authoring (ASVS extraction, consistency checks) and is not part of the skill's runtime. The skill is developed test-first as the writing-skills skill prescribes: baseline run without the skill, write the skill, run again, close gaps.
 
-**Tech Stack:** Markdown (Agent Skills format, agentskills.io), Python 3 standard library for dev tooling, `unittest` for dev tests, Claude Code subagents for skill tests. Acceptance target: `../tory` (Laravel 13).
+**Tech Stack:** Markdown (Agent Skills format, agentskills.io), Python 3 standard library for dev tooling, `unittest` for dev tests, Claude Code subagents for skill tests. Acceptance target: `../inv` (Laravel 13 in `src/`).
 
 **Spec:** `docs/superpowers/specs/2026-11-08-security-audit-skill-design.md`
 
@@ -158,7 +158,7 @@ git commit -m "feat: ASVS extraction tool and selected requirements"
 
 **Files:**
 - Create: `docs/superpowers/testing/prompts/run-audit.md`
-- Create: `docs/superpowers/testing/2026-11-08-baseline-tory.md`
+- Create: `docs/superpowers/testing/2026-11-08-baseline-inv.md`
 
 **Interfaces:**
 - Produces: the test prompt reused by Tasks 9 and 10.
@@ -167,28 +167,28 @@ git commit -m "feat: ASVS extraction tool and selected requirements"
 
 `docs/superpowers/testing/prompts/run-audit.md`, verbatim:
 
-> You are working in the repository at ../tory. Produce a security self-assessment of this application against OWASP ASVS 5.0 Level 2 that a customer could read, and a list of what is missing so the team can create tickets. Write your results into the repository. Do not change application code. When you are done, list the files you wrote.
+> You are working in the repository at ../inv (the Laravel application lives in the src/ subfolder). Produce a security self-assessment of this application against OWASP ASVS 5.0 Level 2 that a customer could read, and a list of what is missing so the team can create tickets. Write your results into the repository. Do not change application code. When you are done, list the files you wrote.
 
-- [ ] **Step 2: Confirm Tory is clean**
+- [ ] **Step 2: Confirm inv is clean**
 
-Run: `git -C ../tory status --short`
-Expected: no output. If there is output, stop and ask the user.
+Run: `git -C ../inv status --short`
+Expected: no output (inv sits on a feature branch; that is fine). If there is output, stop and ask the user.
 
 - [ ] **Step 3: Dispatch a general-purpose subagent with the prompt from step 1 and no skill loaded**
 
-Wait for completion. Then: `git -C ../tory status --short` and read every file it created.
+Wait for completion. Then: `git -C ../inv status --short` and read every file it created.
 
 - [ ] **Step 4: Record the baseline**
 
-In `docs/superpowers/testing/2026-11-08-baseline-tory.md`, record, with verbatim quotes: which files were written and where; whether statuses were given without evidence; whether ASVS IDs were real (spot-check five against `dev/asvs-selected.json`); whether requirement text was invented or reworded; forbidden words used (run the grep from Task 7 step 3 over the output); whether sampling was disclosed; whether any secret value or `.env` content appeared; whether the agent asked about scope. Classify each failure as discipline (knew better, skipped), shape (wrong form), or omission, per the writing-skills "Match the Form to the Failure" table. This classification drives the form of `SKILL.md` in Task 7.
+In `docs/superpowers/testing/2026-11-08-baseline-inv.md`, record, with verbatim quotes: which files were written and where; whether statuses were given without evidence; whether ASVS IDs were real (spot-check five against `dev/asvs-selected.json`); whether requirement text was invented or reworded; forbidden words used (run the grep from Task 7 step 3 over the output); whether sampling was disclosed; whether any secret value or `.env` content appeared; whether the agent asked about scope. Classify each failure as discipline (knew better, skipped), shape (wrong form), or omission, per the writing-skills "Match the Form to the Failure" table. This classification drives the form of `SKILL.md` in Task 7.
 
-- [ ] **Step 5: Reset Tory**
+- [ ] **Step 5: Reset inv**
 
 ```bash
-git -C ../tory clean -fdn   # dry run, read the list
-git -C ../tory clean -fd
-git -C ../tory checkout -- .
-git -C ../tory status --short
+git -C ../inv clean -fdn   # dry run, read the list
+git -C ../inv clean -fd
+git -C ../inv checkout -- .
+git -C ../inv status --short
 ```
 Expected: no output after the last command.
 
@@ -196,7 +196,7 @@ Expected: no output after the last command.
 
 ```bash
 git add docs/superpowers/testing/
-git commit -m "test: baseline audit run on Tory without the skill"
+git commit -m "test: baseline audit run on inv without the skill"
 ```
 
 ---
@@ -476,7 +476,7 @@ git commit -m "feat: output templates and wording check"
 - Create: `dev/tests/test_skill_md.py`
 
 **Interfaces:**
-- Consumes: `docs/superpowers/testing/2026-11-08-baseline-tory.md` (Task 2) for the failure classification; reference and template files from Tasks 4 to 7.
+- Consumes: `docs/superpowers/testing/2026-11-08-baseline-inv.md` (Task 2) for the failure classification; reference and template files from Tasks 4 to 7.
 - Produces: the skill entry point. **REQUIRED SUB-SKILL:** superpowers:writing-skills for structure, description rules and the form-matching table.
 
 - [ ] **Step 1: Write the failing test**
@@ -555,10 +555,10 @@ git commit -m "feat: SKILL.md procedure, status and writing rules"
 
 ---
 
-### Task 9: First run with the skill on Tory (GREEN verification)
+### Task 9: First run with the skill on inv (GREEN verification)
 
 **Files:**
-- Create: `docs/superpowers/testing/2026-11-08-run1-tory.md`
+- Create: `docs/superpowers/testing/2026-11-08-run1-inv.md`
 - Modify (as needed): `SKILL.md`, `reference/*.md`, `templates/*.md`
 
 - [ ] **Step 1: Install the skill for this machine**
@@ -570,27 +570,27 @@ ls -la ~/.claude/skills/security-audit/SKILL.md
 ```
 Expected: the symlink resolves. The symlink is not committed.
 
-- [ ] **Step 2: Confirm Tory is clean** (as Task 2 step 2).
+- [ ] **Step 2: Confirm inv is clean** (as Task 2 step 2).
 
 - [ ] **Step 3: Dispatch a general-purpose subagent with the Task 2 prompt, prefixed by one line: "Use the security-audit skill at ~/.claude/skills/security-audit/SKILL.md."**
 
 The subagent will ask the scope confirmation and the contact question; answer "yes, correct" and "security@example.com, 5 business days, no PGP key" via SendMessage.
 
-- [ ] **Step 4: Evaluate against the spec's acceptance list and record in `docs/superpowers/testing/2026-11-08-run1-tory.md`**
+- [ ] **Step 4: Evaluate against the spec's acceptance list and record in `docs/superpowers/testing/2026-11-08-run1-inv.md`**
 
-Check and quote: files written are exactly `security/checklist.md`, `security/TODO.md`, `security/contact.md`, `SECURITY.md`; scope detection named Laravel, the database, Filament login, Passport/Sanctum tokens, Compose; every row has a status; `grep -c "| implemented |" security/checklist.md` rows all have a non-empty Evidence cell (script: awk over the table, or read); `TODO.md` entry count equals the number of `partial` plus `not implemented` rows; `SECURITY.md` per-chapter counts equal the checklist's; forbidden-word grep over the four files exits 1; `git -C ../tory diff --stat` shows no changes to application files.
+Check and quote: files written are exactly `security/checklist.md`, `security/TODO.md`, `security/contact.md`, `SECURITY.md`; scope detection named Laravel in `src/`, the database, Jetstream login with two-factor authentication, Sanctum tokens, Docker Compose, the Caddyfile, Bitbucket Pipelines; every row has a status; `grep -c "| implemented |" security/checklist.md` rows all have a non-empty Evidence cell (script: awk over the table, or read); `TODO.md` entry count equals the number of `partial` plus `not implemented` rows; `SECURITY.md` per-chapter counts equal the checklist's; forbidden-word grep over the four files exits 1; `git -C ../inv diff --stat` shows no changes to application files.
 
 - [ ] **Step 5: Review Focus 5 (absent conditional group)**
 
-Identify one condition `detection.md` says is absent in Tory (candidates: `graphql`, `node-backend`, `rich-text`). Confirm its rows appear in `checklist.md` with `n/a` and one shared reason, and that the `SECURITY.md` chapter table counts them under `n/a`. Record.
+Identify one condition `detection.md` says is absent in inv (candidates: `graphql`, `node-backend`, `oauth-client`). Confirm its rows appear in `checklist.md` with `n/a` and one shared reason, and that the `SECURITY.md` chapter table counts them under `n/a`. Record.
 
 - [ ] **Step 6: Review Focus 1 (existing SECURITY.md)**
 
-Reset Tory (Task 2 step 5). Create `../tory/SECURITY.md` containing `# Security\n\nReport issues to the maintainers.\n`. Re-run step 3. Expected: the subagent asks replace or append before writing. Answer "append". Expected: the original two lines are still at the top, byte for byte (`head -3`). Record.
+Reset inv (Task 2 step 5). Create `../inv/SECURITY.md` containing `# Security\n\nReport issues to the maintainers.\n`. Re-run step 3. Expected: the subagent asks replace or append before writing. Answer "append". Expected: the original two lines are still at the top, byte for byte (`head -3`). Record.
 
 - [ ] **Step 7: Review Focus 2 (secret values)**
 
-Run: `grep -o -E "^[A-Z_]*(KEY|SECRET|PASSWORD|TOKEN)=.+$" ../tory/.env 2>/dev/null | cut -d= -f2- | grep -v '^$' > <scratchpad>/secrets.txt` then `grep -F -f <scratchpad>/secrets.txt security/checklist.md security/TODO.md SECURITY.md` in Tory. Expected: no matches (exit 1). If `.env` has no such values, place a `.env` with `APP_KEY=base64:TESTSECRETVALUE123` temporarily and repeat. Remove it afterwards. Record.
+Run: `grep -o -E "^[A-Z_]*(KEY|SECRET|PASSWORD|TOKEN)=.+$" ../inv/.env 2>/dev/null | cut -d= -f2- | grep -v '^$' > <scratchpad>/secrets.txt` then `grep -F -f <scratchpad>/secrets.txt security/checklist.md security/TODO.md SECURITY.md` in inv. Expected: no matches (exit 1). If `.env` has no such values, place a `.env` with `APP_KEY=base64:TESTSECRETVALUE123` temporarily and repeat. Remove it afterwards. Record.
 
 - [ ] **Step 8: Review Focus 4 (audit tool absent)**
 
@@ -600,12 +600,12 @@ Re-run step 3 with `PATH` restricted so `composer` is not found: prefix the suba
 
 For each failure, edit the owning file (`SKILL.md`, a reference entry, a template). Match the form to the failure as in Task 8 step 3. Re-run the failing step until it passes. Record each fix and its re-run in the run1 file.
 
-- [ ] **Step 10: Reset Tory, commit**
+- [ ] **Step 10: Reset inv, commit**
 
 Reset as Task 2 step 5.
 ```bash
 git add docs/superpowers/testing/ SKILL.md reference/ templates/
-git commit -m "test: first skill run on Tory and fixes"
+git commit -m "test: first skill run on inv and fixes"
 ```
 
 ---
@@ -613,10 +613,10 @@ git commit -m "test: first skill run on Tory and fixes"
 ### Task 10: Re-run behaviour
 
 **Files:**
-- Create: `docs/superpowers/testing/2026-11-08-run2-tory.md`
+- Create: `docs/superpowers/testing/2026-11-08-run2-inv.md`
 - Modify (as needed): `SKILL.md`
 
-- [ ] **Step 1: Run the skill on clean Tory** (Task 9 step 3). Keep the output files in place. Save copies: `cp -r security <scratchpad>/run-a-security; cp SECURITY.md <scratchpad>/run-a-SECURITY.md` (inside Tory).
+- [ ] **Step 1: Run the skill on clean inv** (Task 9 step 3). Keep the output files in place. Save copies: `cp -r security <scratchpad>/run-a-security; cp SECURITY.md <scratchpad>/run-a-SECURITY.md` (inside inv).
 
 - [ ] **Step 2: Run again on the unchanged repo**
 
@@ -632,11 +632,11 @@ Pick one `implemented` row whose evidence is a single file not needed by other r
 
 - [ ] **Step 5: Fix what failed, re-run the failing step, record.**
 
-- [ ] **Step 6: Reset Tory, commit**
+- [ ] **Step 6: Reset inv, commit**
 
 ```bash
 git add docs/superpowers/testing/ SKILL.md reference/ templates/
-git commit -m "test: re-run behaviour on Tory and fixes"
+git commit -m "test: re-run behaviour on inv and fixes"
 ```
 
 ---
@@ -680,7 +680,7 @@ git commit -m "test: stack neutrality run on Juice Shop"
 
 - [ ] **Step 1: Rewrite `CLAUDE.md`**
 
-Replace the "Architektur (geplant)" and rules sections with the as-built structure: repo is the skill; `dev/` tooling and how to run the tests (`python3 -m unittest discover -s dev/tests -v`), how to regenerate `dev/asvs-selected.json` (Task 1 step 6), how to run the consistency checker, how to install for local testing (Task 9 step 1), how to run a skill test on Tory (Task 9 steps 2 to 4). Point to the design doc as the source of truth and drop the "Bekannte Spannung" section (resolved: no scripts). Keep it in English.
+Replace the "Architektur (geplant)" and rules sections with the as-built structure: repo is the skill; `dev/` tooling and how to run the tests (`python3 -m unittest discover -s dev/tests -v`), how to regenerate `dev/asvs-selected.json` (Task 1 step 6), how to run the consistency checker, how to install for local testing (Task 9 step 1), how to run a skill test on inv (Task 9 steps 2 to 4). Point to the design doc as the source of truth and drop the "Bekannte Spannung" section (resolved: no scripts). Keep it in English.
 
 - [ ] **Step 2: Write `README.md`**
 
@@ -692,7 +692,7 @@ Insert as first line: `> Superseded by docs/superpowers/specs/2026-11-08-securit
 
 - [ ] **Step 4: Second-agent load check**
 
-Run: `ls ~/.agents/skills/ 2>/dev/null; which codex cursor-agent 2>/dev/null`. If Codex or Cursor CLI is installed: `ln -sfn "$(pwd)" ~/.agents/skills/security-audit`, start the agent in `../tory`, ask "which skills do you have for a security audit?" and confirm `security-audit` is listed. Record the result in the README install section. If neither is installed, write "not verified on a second agent" in the README and in the run2 test file; do not claim otherwise.
+Run: `ls ~/.agents/skills/ 2>/dev/null; which codex cursor-agent 2>/dev/null`. If Codex or Cursor CLI is installed: `ln -sfn "$(pwd)" ~/.agents/skills/security-audit`, start the agent in `../inv`, ask "which skills do you have for a security audit?" and confirm `security-audit` is listed. Record the result in the README install section. If neither is installed, write "not verified on a second agent" in the README and in the run2 test file; do not claim otherwise.
 
 - [ ] **Step 5: Run all dev tests one last time**
 
