@@ -20,6 +20,8 @@ Rows come only from `reference/asvs-checks.md` and `reference/additional-practic
 
 ## Procedure
 
+The questions in steps 2, 5 and 6 are mandatory. Ask by ending your turn with the question; the reply is the answer. Never invent answers or continue on assumptions.
+
 1. **Detect the project** per `reference/detection.md`: search from the repository root, record the application root in the project picture paragraph, and mark each of the 18 condition keys detected or not detected with evidence.
 2. **Confirm the scope** in one question: the project picture paragraph, then "Conditions detected: ... Conditions not detected: ... Is this correct?" Inconclusive keys go into this question.
 3. **Read existing state.** If `security/checklist.md` exists, parse it.
