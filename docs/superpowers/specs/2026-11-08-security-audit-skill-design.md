@@ -1,7 +1,7 @@
 # Security Audit Skill — Design
 
 Date: 2026-11-08
-Status: draft, pending approval
+Status: approved 2026-11-08, implemented on branch feat/security-audit-skill
 Supersedes: `handover.md` where the two disagree (see "Changes from the handover").
 
 ## Intent

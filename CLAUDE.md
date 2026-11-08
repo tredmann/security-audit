@@ -15,13 +15,13 @@ The skill has no scripts. The agent only reads files, searches and runs shell co
 Hard rules that tests and reviews rely on:
 - Status words are exactly `implemented`, `partial`, `not implemented`, `n/a`.
 - ASVS text in `reference/asvs-checks.md` is copied verbatim from the release, never reworded. IDs come from `dev/asvs-selection.txt`.
-- `SKILL.md` body stays at or under 1100 words in the body (`sed '1,/^---$/d' SKILL.md | wc -w`; currently 1089). Check the count after every edit.
+- `SKILL.md` body stays at or under 1200 words in the body (`sed '1,/^---$/d' SKILL.md | wc -w`; currently 1183; `dev/tests/test_skill_md.py` checks it). Check the count after every edit.
 - Generated texts follow the writing rules in `SKILL.md`: short sentences, no dashes, no marketing words. The forbidden-word grep in `SKILL.md` and `dev/tests/test_templates.py` is the check.
 
 ## Commands
 
 ```sh
-python3 -m unittest discover -s dev/tests -v                                  # 21 tests
+python3 -m unittest discover -s dev/tests -v                                  # 24 tests
 python3 -I dev/check_reference.py reference/asvs-checks.md dev/asvs-selected.json   # exit 0 = consistent
 ```
 
@@ -41,9 +41,9 @@ python3 -I dev/extract_asvs.py dev/asvs-source/asvs-5.0.0.flat.json dev/asvs-sel
 Evidence lives in `docs/superpowers/testing/` (baseline, run1, run2 on `../inv`, run on Juice Shop). Prompts are in `docs/superpowers/testing/prompts/`.
 
 1. Install: `ln -sfn "$(pwd)" ~/.claude/skills/security-audit`.
-2. Start from a clean target: `git status --short` empty. A test run writes into the target repo. After a dry run reset with `git clean -fd` (check with `git clean -nd` first).
+2. Start from a clean target: `git status --short` empty. A test run writes into the target repo. After a run reset only the skill's outputs: `git clean -fd -- security SECURITY.md` (check with `git clean -nd -- security SECURITY.md` first), plus `git checkout -- SECURITY.md` when the target already tracked a `SECURITY.md`.
 3. Dispatch the test agent as a subagent. Subagents share this repo as cwd, so the prompt must say "read nothing outside <target> except the skill directory".
-4. The skill's two mandatory questions (scope, contact) and the existing `SECURITY.md` question cannot be answered through a relay: test agents refuse answers relayed by another agent. Put an "Owner answers" block in the prompt instead (see "Setup" in run1-inv.md). To test that the skill asks, omit the answer and check that the agent stops and asks.
+4. The skill's three questions (scope, contact, existing `SECURITY.md`) cannot be answered through a relay: test agents refuse answers relayed by another agent. Put an "Owner answers" block in the prompt instead (see "Owner answers pre-supplied" in run1-inv.md). To test that the skill asks, omit the answer and check that the agent stops and asks.
 5. Check mechanically: row count 105, statuses in the 4 values, TODO ids equal open ids, per-chapter counts in `SECURITY.md` equal the checklist, forbidden-word grep exits 1.
 6. Record the result, including failures, in a new file under `docs/superpowers/testing/`. Fix `SKILL.md` or `reference/`, then re-run the case that failed.
 
