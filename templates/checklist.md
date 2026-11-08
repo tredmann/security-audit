@@ -101,4 +101,5 @@ Scope:
 
 ## Changes
 
+<!-- First run: this section is the single line "None yet." -->
 - <YYYY-MM-DD> <ID> <old> → <new>: <one sentence>

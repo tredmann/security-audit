@@ -1,3 +1,4 @@
+<!-- Regenerated on every run of the security-audit skill. Hand edits are lost. -->
 # Security TODO
 
 Open items from the latest security audit. Each entry lists one requirement that is partial or not implemented.

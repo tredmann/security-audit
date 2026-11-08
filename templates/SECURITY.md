@@ -4,7 +4,7 @@
 
 ## About this document
 
-<project summary, no file paths>
+<project summary: no versions, no file paths>
 
 Checked against OWASP ASVS 5.0 Level 2, curated subset of 93 requirements, plus 12 additional practices.
 
@@ -58,6 +58,7 @@ PGP key: <fingerprint or URL, or delete this line>
 
 ## Changes
 
+<!-- First run: this section is the single line "None yet." -->
 - <YYYY-MM-DD> <ID> <old> → <new>: <one sentence>
 
 <!-- security-audit:end -->

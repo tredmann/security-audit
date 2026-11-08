@@ -13,7 +13,7 @@ Every row gets one status: `implemented`, `partial`, `not implemented` or `n/a`.
 In the target repository:
 
 - `security/checklist.md`: all rows with status and evidence. It is the state for the next run.
-- `security/TODO.md`: open rows, Level 1 first.
+- `security/TODO.md`: open rows, Level 1 first. Regenerated on every run; hand edits are lost.
 - `security/contact.md`: contact address and response time.
 - `SECURITY.md`: counts per chapter, practices, changes, contact. The generated part sits between `<!-- security-audit:start -->` and `<!-- security-audit:end -->`. Text outside the markers is never touched. If a `SECURITY.md` without markers exists, the skill asks whether to replace or append.
 
