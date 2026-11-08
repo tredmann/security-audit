@@ -41,3 +41,17 @@ None needed, so no second run.
 ## Observations
 - SECURITY.md now shows two contacts (existing owner address with PGP, and the test fixture); expected for the append answer.
 - The agent noted the shallow clone limits AP-7 history scanning, and a referenced nginx.conf is missing (V12.1.1 `not implemented`, "not verifiable locally").
+
+## Final fix verification (2026-11-08)
+
+Skill at commits dfdf1d0, 3e1b58d, 7d784b6 (final fix wave). Reset first: `git -C /private/tmp/claude-501/juice/juice-shop checkout -- SECURITY.md && git -C /private/tmp/claude-501/juice/juice-shop clean -fd -- security`; afterwards the `SECURITY.md` md5 was 37032aebe1ff9596751b0e4f7c60acef (the original). Test agent: general-purpose, sonnet, run-audit prompt with the clone path, the read restriction, a no-install/no-execute line, and the Owner answers block (scope correct; security@example.com test fixture; 5 business days; no PGP; append). It asked no question.
+
+Checks (quotes marked as taken from `security/checklist.md` or `SECURITY.md` in the clone):
+- AP-12: `implemented`. Checklist evidence: "SECURITY.md:20 names a private reporting contact outside the generated block; `git ls-files SECURITY.md` prints SECURITY.md." The file is tracked, so both sources of the new rule count; the agent cited both. Expected `implemented`: PASS.
+- AP-7 ran with `-i`. Command the agent ran (from its transcript): `git log --all -i -G'(password|passwd|secret|api_key|aws_secret_access_key|token|_key)[[:space:]]*[=:][[:space:]]*.{8,}' --format=%H --name-only`. Checklist reason: "The second pattern run listed 127 file hits, mostly code and fixtures, not judged one by one." Status `not implemented` on the first pattern (private key block, commit hash and three paths, no value). PASS. Observation: the checklist evidence names the first command only as "git log --all -G (private-key pattern)", not the full command text.
+- Original text preserved: the first 7148 bytes of the new `SECURITY.md` (size of the original) have md5 37032aebe1ff9596751b0e4f7c60acef, equal to the original. `git status --short`: ` M SECURITY.md`, `?? security/`. PASS.
+- First-run Changes: both `security/checklist.md` and `SECURITY.md` read "None yet." under "## Changes". PASS.
+- About section of `SECURITY.md`: no versions, no paths ("It has a Node.js back end and an Angular front end, stores data in SQLite ..."). PASS.
+- Rule changes visible: V3.4.6 `not implemented` ("helmet.frameguard() sets X-Frame-Options only"); V8.2.2 `not implemented` (basket loaded by URL id with no ownership check); AP-8 `not implemented` ("Only a legacy Dependabot v1 file in .dependabot/ exists").
+- 105 rows; forbidden-word grep over the four outputs: 0 matches (exit 1).
+- Counts (agent report): ASVS 93 = 9 implemented / 14 partial / 65 not implemented / 5 n/a; practices 12 = 4 / 3 / 5 / 0.
