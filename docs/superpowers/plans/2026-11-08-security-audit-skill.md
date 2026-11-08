@@ -543,7 +543,7 @@ Expected: `OK`.
 
 - [ ] **Step 5: Word count check**
 
-Run: `sed '1,/^---$/d' SKILL.md | sed '1,/^---$/d' | wc -w`
+Run: `sed '1,/^---$/d' SKILL.md | wc -w` (strips the frontmatter block, then counts)
 Expected: under 900. If over, move detail into the reference files.
 
 - [ ] **Step 6: Commit**
