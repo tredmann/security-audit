@@ -34,11 +34,11 @@ The questions in steps 2, 5 and 6 are mandatory. Ask by ending your turn with th
    - Every status change is recorded with date, old and new status in the "Changes" section. "Changes" holds only status changes, one line each, never "unchanged" lines. Changes lines are added, never removed or edited.
 4. **Check.** Read the headers of `reference/asvs-checks.md` and `reference/additional-practices.md`. Per entry in scope, run "Where to look", apply "Implemented when" and "Not implemented when", fill every column. Run `ls` on every path before citing it; never cite a path you have not listed. Commands: file search, `grep`, reading files, `git log` per the AP-7 recipe in `reference/additional-practices.md`, and a dependency audit (`composer audit --locked --no-plugins`, `npm audit`, `pip-audit`) only if the tool is on PATH and the lock file exists. Otherwise V15.2.1 is `not implemented`, reason "not verifiable locally, run `<command>`". "No packages - skipping audit" is not a clean result: the lock file was not audited, and V15.2.1 keeps that reason.
 5. **Contact.** If `security/contact.md` is missing, ask once for contact address and response time (PGP key optional) and write it.
-6. **Write outputs** in one pass from the same data, so `SECURITY.md` numbers and dates match the checklist. Every run rewrites `security/TODO.md` and the generated block, even without status changes.
+6. **Write outputs** in one pass from the same data, so `SECURITY.md` numbers and dates match the checklist. Every run rewrites `security/TODO.md` and the generated block from the templates; never keep the previous block.
    - `security/TODO.md`: every `not implemented` and `partial` row; Level 1, Level 2, then practices headed `### AP-7 (AP) <short practice>`.
-   - `SECURITY.md`: the project summary is the project picture without component versions, file paths or line citations. Each open or partial item's short text is the first clause of its requirement text, copied unreworded up to the first comma or period; for a practice, its title. Checked = all rows of the chapter = implemented + partial + not implemented + n/a. One row per practice. Changes newest first; on a first run the Changes section of both `SECURITY.md` and `security/checklist.md` reads "None yet."
+   - `SECURITY.md`: the project summary is the project picture without component versions, file paths or line citations. Open items' short text: the requirement's first clause, unreworded, up to the first comma or period; for a practice, its title. Checked = all rows of the chapter = implemented + partial + not implemented + n/a. One row per practice. Changes newest first; on a first run the Changes section of both `SECURITY.md` and `security/checklist.md` reads "None yet."
    - The generated block sits between `<!-- security-audit:start -->` and `<!-- security-audit:end -->`; everything outside is preserved byte for byte. Existing `SECURITY.md` without markers: ask once, replace or append.
-7. **Report** counts per status, open Level 1 items, paths written, and remind that `security/checklist.md` and `security/TODO.md` map unfixed weaknesses and should not be public while open items remain; `SECURITY.md` carries no file paths and is meant to be public.
+7. **Report** counts per status, open Level 1 items, paths written, and remind that `security/checklist.md` and `security/TODO.md` map unfixed weaknesses and stay private while open items remain; `SECURITY.md` is meant to be public.
 
 ## Status contract
 
@@ -58,6 +58,7 @@ Never write a secret value into any output. Cite the path, and for git history t
 | "Standard framework protections are in place." | Not evidence without lock-file line and config key. |
 | "`http_only => true` shows it." | Evidence is `path:line`. |
 | "The team's docs say backups are tested." | Docs are claims. Check code or config. |
+| "No status changed, keep `SECURITY.md`." | Rewrite the block; rules and templates change. |
 | "The detail helps the customer." | `SECURITY.md` gets IDs, short text, counts, dates. No paths, no exploit detail. |
 
 ## Writing rules
