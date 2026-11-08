@@ -4,7 +4,7 @@ Guidance for Claude Code sessions working on this repository.
 
 ## What this repo is
 
-The repo is an agent skill (open Agent Skills format). `SKILL.md` at the root is the entry point. The skill runs on other people's projects (the target repository) and checks them against a curated OWASP ASVS 5.0 Level 2 subset plus twelve additional practices. It writes `security/checklist.md`, `security/TODO.md`, `security/contact.md` and `SECURITY.md` into the target. Do not confuse the two: files in this repo are the skill, files under `security/` are output in a target.
+The repo is an agent skill (open Agent Skills format). `SKILL.md` at the root is the entry point. The skill runs on other people's projects (the target repository) and checks them against a curated OWASP ASVS 5.0 Level 2 subset plus 12 additional practices. It writes `security/checklist.md`, `security/TODO.md`, `security/contact.md` and `SECURITY.md` into the target. Do not confuse the two: files in this repo are the skill, files under `security/` are output in a target.
 
 The skill has no scripts. The agent only reads files, searches and runs shell commands. `dev/` is tooling for maintaining this repo, not part of what the skill ships.
 
@@ -15,7 +15,7 @@ The skill has no scripts. The agent only reads files, searches and runs shell co
 Hard rules that tests and reviews rely on:
 - Status words are exactly `implemented`, `partial`, `not implemented`, `n/a`.
 - ASVS text in `reference/asvs-checks.md` is copied verbatim from the release, never reworded. IDs come from `dev/asvs-selection.txt`.
-- `SKILL.md` body stays under the word limit recorded in the test records (about 1050 words). Check the count after every edit.
+- `SKILL.md` body stays at or under 1100 words in the body (`sed '1,/^---$/d' SKILL.md | wc -w`; currently 1089). Check the count after every edit.
 - Generated texts follow the writing rules in `SKILL.md`: short sentences, no dashes, no marketing words. The forbidden-word grep in `SKILL.md` and `dev/tests/test_templates.py` is the check.
 
 ## Commands
@@ -44,7 +44,7 @@ Evidence lives in `docs/superpowers/testing/` (baseline, run1, run2 on `../inv`,
 2. Start from a clean target: `git status --short` empty. A test run writes into the target repo. After a dry run reset with `git clean -fd` (check with `git clean -nd` first).
 3. Dispatch the test agent as a subagent. Subagents share this repo as cwd, so the prompt must say "read nothing outside <target> except the skill directory".
 4. The skill's two mandatory questions (scope, contact) and the existing `SECURITY.md` question cannot be answered through a relay: test agents refuse answers relayed by another agent. Put an "Owner answers" block in the prompt instead (see "Setup" in run1-inv.md). To test that the skill asks, omit the answer and check that the agent stops and asks.
-5. Check mechanically: row count 105, statuses in the four values, TODO ids equal open ids, per-chapter counts in `SECURITY.md` equal the checklist, forbidden-word grep exits 1.
+5. Check mechanically: row count 105, statuses in the 4 values, TODO ids equal open ids, per-chapter counts in `SECURITY.md` equal the checklist, forbidden-word grep exits 1.
 6. Record the result, including failures, in a new file under `docs/superpowers/testing/`. Fix `SKILL.md` or `reference/`, then re-run the case that failed.
 
 Counts vary between runs (judgement of partial vs implemented). Compare statuses and Changes lines, not exact totals.

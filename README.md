@@ -4,7 +4,7 @@ An agent skill that checks a repository against OWASP ASVS 5.0 and writes a chec
 
 ## What it checks
 
-93 requirements from ASVS 5.0.0 (Level 1 and Level 2, selected for typical web applications and APIs) plus twelve additional practices such as secrets handling and dependency updates. Each is checked from source and configuration, not by running the application. Requirements for features the project does not have (for example XML parsing) are marked `n/a` with a reason. The full list is in [reference/asvs-checks.md](reference/asvs-checks.md) and [reference/additional-practices.md](reference/additional-practices.md).
+93 requirements from ASVS 5.0.0 (Level 1 and Level 2, selected for typical web applications and APIs) plus 12 additional practices such as secrets handling and dependency updates. Each is checked from source and configuration, not by running the application. Requirements for features the project does not have (for example XML parsing) are marked `n/a` with a reason. The full list is in [reference/asvs-checks.md](reference/asvs-checks.md) and [reference/additional-practices.md](reference/additional-practices.md).
 
 Every row gets one status: `implemented`, `partial`, `not implemented` or `n/a`. `implemented` needs evidence (a `path:line` or a config key). Runs are repeatable: a second run re-checks open rows, verifies evidence of implemented rows and logs every status change with a date.
 
@@ -27,7 +27,7 @@ Claude Code:
 ln -sfn /path/to/this/repo ~/.claude/skills/security-audit
 ```
 
-Other agents that read `~/.agents/skills/` (used by Codex, Copilot CLI and Gemini CLI):
+Agents that read `~/.agents/skills/`:
 
 ```sh
 mkdir -p ~/.agents/skills
@@ -38,7 +38,7 @@ Verified only on Claude Code. Not verified on a second agent: neither Codex nor 
 
 ## Use
 
-Open your agent in the project and ask for a security audit, an ASVS check or a `SECURITY.md`. The skill asks you two questions (is the detected project scope correct, who is the security contact) and, if needed, a third about an existing `SECURITY.md`. It waits for your answers.
+Open your agent in the project and ask for a security audit, an ASVS check or a `SECURITY.md`. The skill asks you 2 questions (is the detected project scope correct, who is the security contact) and, if needed, a 3rd about an existing `SECURITY.md`. It waits for your answers.
 
 ## Privacy
 
