@@ -20,7 +20,7 @@ Rows come only from `reference/asvs-checks.md` and `reference/additional-practic
 
 ## Procedure
 
-The questions in steps 2, 5 and 6 are mandatory. Ask by ending your turn with the question; the reply is the answer. Running non-interactively or with no user at hand is not a reason to skip them: end the turn with the question. Never invent answers or continue on assumptions.
+The questions in steps 2, 5 and 6 are mandatory. Ask by ending your turn with the question; the reply is the answer. Running non-interactively or with no user at hand is not a reason to skip them: end the turn with the question. When stopped on a question, write nothing else, not even a draft. Never invent answers or continue on assumptions.
 
 1. **Detect the project** per `reference/detection.md`: search from the repository root, record the application root in the project picture paragraph, and mark each of the 18 condition keys detected or not detected with evidence.
 2. **Confirm the scope** in one question: the project picture paragraph, then "Conditions detected: ... Conditions not detected: ... Is this correct?" Inconclusive keys go into this question.
@@ -30,7 +30,7 @@ The questions in steps 2, 5 and 6 are mandatory. Ask by ending your turn with th
    - `n/a` rows: fresh scope detection wins. If a conditional group was `n/a` and detection now finds the feature, the group is checked.
    - New requirements not in the existing file are checked.
    - The user may ask for a full re-check when invoking the skill; then every row is re-checked.
-   - Every status change is recorded with date, old and new status in the "Changes" section.
+   - Every status change is recorded with date, old and new status in the "Changes" section. "Changes" holds only status changes, one line each, never "unchanged" lines.
 4. **Check.** Read the headers of `reference/asvs-checks.md` and `reference/additional-practices.md`. Per entry in scope, run "Where to look", apply "Implemented when" and "Not implemented when", fill every column. Commands: file search, `grep`, reading files, `git log` per the AP-7 recipe in `reference/additional-practices.md`, and a dependency audit (`composer audit`, `npm audit`, `pip-audit`) only if the tool is on PATH and the lock file exists. Otherwise V15.2.1 is `not implemented`, reason "not verifiable locally, run `<command>`".
 5. **Contact.** If `security/contact.md` is missing, ask once for contact address and response time (PGP key optional) and write it.
 6. **Write outputs** in one pass from the same data, so `SECURITY.md` numbers and dates match the checklist.
