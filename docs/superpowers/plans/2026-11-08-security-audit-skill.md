@@ -307,7 +307,7 @@ git commit -m "feat: reference file consistency checker"
 
 Title, one paragraph: ASVS version 5.0.0, selection size 93, CC BY-SA 4.0 attribution with link to `https://github.com/OWASP/ASVS`, the sentence "Requirement text is quoted verbatim from the release; do not reword it." Then a table of condition keys with a one-line meaning each (the detection rules themselves live in `reference/detection.md`, Task 6).
 
-- [ ] **Step 2: Write entries for V1, V2, V3, V4, V5 (28 entries)**
+- [ ] **Step 2: Write entries for V1, V2, V3, V4, V5 (31 entries)**
 
 One `## Chapter` heading per chapter using `chapter_name` from the JSON. For each entry: official text; **Where to look** as two to four stack-neutral search strategies plus PHP/Laravel, Node and Python examples where the names differ (for example V1.2.4: `DB::raw`, `whereRaw`, string concatenation into `query(`, `->prepare(` without bindings; `knex.raw`, template literals in `.query(`; `cursor.execute(f"`); **Implemented when** and **Not implemented when** as concrete observable conditions. For `partial`, the general rule in `SKILL.md` applies, so entries do not repeat it unless the split is specific (for example V3.3.x where one cookie may be set correctly and another not).
 
@@ -330,7 +330,7 @@ git commit -m "docs: ASVS checks V1-V5 with search hints"
 **Files:**
 - Modify: `reference/asvs-checks.md` (append)
 
-- [ ] **Step 1: Write entries for V6, V7, V8, V9, V10 (29 entries)**
+- [ ] **Step 1: Write entries for V6, V7, V8, V9, V10 (31 entries)**
 
 Same shape as Task 4. V6 core entries carry `own-auth`. Hints must cover framework-provided controls (Laravel `Password::defaults()`, Fortify/Breeze/Filament auth, `session.lifetime`, `Auth::logoutOtherDevices`; Django `AUTH_PASSWORD_VALIDATORS`, `SESSION_COOKIE_AGE`; Express `express-session` options, Passport.js) and explicitly say where a framework default counts as evidence (cite the config file and key, for example `config/session.php: 'lifetime'`).
 
@@ -359,7 +359,7 @@ git commit -m "docs: ASVS checks V6-V10 with search hints"
 - Produces: `additional-practices.md` entries in the same four-field shape with header `### AP-1: Dockerfile runs as a non-root user (conditional: dockerfile)` and a fifth field `**Reference:**` (exact reference string from the spec table). AP-1, AP-2 carry `(conditional: dockerfile)`; AP-3, AP-4, AP-5 `(conditional: compose)`; AP-8 to AP-11 `(conditional: ci)`, AP-11 additionally GitHub Actions only; AP-6, AP-7, AP-12 `(core)`. These three extra condition keys (`dockerfile`, `compose`, `ci`) are defined in `detection.md` and added to `CONDITIONS` in `dev/check_reference.py`.
 - Produces: `detection.md` with one section per condition key (all 18) giving the observable predicate ("files matching `**/Dockerfile*` exist", "`composer.json` requires `laravel/passport` or `firebase/php-jwt` or `lcobucci/jwt`, or `package.json` depends on `jsonwebtoken`/`jose`", ...), plus a "Project picture" section listing what to read to fill the one-paragraph description (manifest, framework config, routes, migrations, Compose, CI).
 
-- [ ] **Step 1: Write entries for V11 to V16 (36 entries)**
+- [ ] **Step 1: Write entries for V11 to V16 (31 entries)**
 
 Same shape. V15.2.1 hint names the audit commands per ecosystem (`composer audit`, `npm audit --omit=dev`, `pip-audit`, `cargo audit`, `govulncheck ./...`) and the prerequisite rule (tool on PATH and lock file present, otherwise `not implemented` with reason "not verifiable locally, run `<command>`"). V13.3.1 and AP-7 hints state the redaction rule verbatim: cite path and commit hash, never the value.
 
