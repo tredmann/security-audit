@@ -1,51 +1,50 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code sessions working on this repository.
 
-## Was dieses Repo ist
+## What this repo is
 
-Dieses Repo enthält einen Agent-Skill (offenes Agent-Skills-Format: Ordner mit `SKILL.md` plus `scripts/`, `templates/`, `reference/`). Der Skill wird auf beliebige fremde Softwareprojekte angewendet. Er prüft das Zielprojekt gegen OWASP ASVS 5.0 (Standard Level 2) und erzeugt daraus eine Checkliste und eine öffentliche Security-Seite.
+The repo is an agent skill (open Agent Skills format). `SKILL.md` at the root is the entry point. The skill runs on other people's projects (the target repository) and checks them against a curated OWASP ASVS 5.0 Level 2 subset plus twelve additional practices. It writes `security/checklist.md`, `security/TODO.md`, `security/contact.md` and `SECURITY.md` into the target. Do not confuse the two: files in this repo are the skill, files under `security/` are output in a target.
 
-Die vollständige Spezifikation steht in `handover.md`. Sie ist die maßgebliche Quelle für Anforderungen, Abnahmekriterien und offene Entscheidungen. Vor Änderungen am Skill dort nachlesen.
+The skill has no scripts. The agent only reads files, searches and runs shell commands. `dev/` is tooling for maintaining this repo, not part of what the skill ships.
 
-Stand: Es existiert bisher nur `handover.md`. Es gibt noch keinen Code, keine Build-, Lint- oder Test-Befehle.
+## Design authority
 
-## Zwei Ebenen nicht verwechseln
+`docs/superpowers/specs/2026-11-08-security-audit-skill-design.md` is the source of truth. The plan is `docs/superpowers/plans/2026-11-08-security-audit-skill.md`. `handover.md` is the superseded German first design (scripts, Jinja2, German status words); read it for history only. When spec and code disagree, fix the code or change the spec on purpose.
 
-- **Dieses Repo** = Quellcode des Skills (`SKILL.md`, `scripts/fetch_asvs.py`, `scripts/build_site.py`, `templates/*.j2`, `reference/*.md`).
-- **Zielprojekt** = das Repo, in dem der Skill später läuft. Nur dort entstehen die Ausgaben: `security/asvs/asvs-5.0.json`, `security/asvs/<kapitel>.md`, `security/asvs/README.md`, `security/asvs/TODO.md`, `security/tools.yml` (pflegt der Nutzer), `security/site/index.html`, `SECURITY.md`, `.well-known/security.txt`.
+Hard rules that tests and reviews rely on:
+- Status words are exactly `implemented`, `partial`, `not implemented`, `n/a`.
+- ASVS text in `reference/asvs-checks.md` is copied verbatim from the release, never reworded. IDs come from `dev/asvs-selection.txt`.
+- `SKILL.md` body stays under the word limit recorded in the test records (about 1050 words). Check the count after every edit.
+- Generated texts follow the writing rules in `SKILL.md`: short sentences, no dashes, no marketing words. The forbidden-word grep in `SKILL.md` and `dev/tests/test_templates.py` is the check.
 
-Alle Pfade in Skill und Skripten sind relativ zum Projektordner des Zielprojekts.
+## Commands
 
-## Architektur (geplant)
+```sh
+python3 -m unittest discover -s dev/tests -v                                  # 21 tests
+python3 -I dev/check_reference.py reference/asvs-checks.md dev/asvs-selected.json   # exit 0 = consistent
+```
 
-Datenfluss in einer Richtung:
+Regenerate `dev/asvs-selected.json` after editing `dev/asvs-selection.txt`:
 
-1. `fetch_asvs.py` lädt ASVS 5.0 einmalig aus dem GitHub-Repo `OWASP/ASVS` (JSON/CSV-Export) nach `security/asvs/asvs-5.0.json`. Danach arbeitet alles offline. ASVS-Anforderungen nie aus dem Modellgedächtnis rekonstruieren.
-2. Der Agent folgt `SKILL.md`: Scope abfragen (`reference/kapitel-scope.md`), Code lesen, pro Anforderung Status vergeben (`reference/status-regeln.md`), Kapitel-Tabellen schreiben.
-3. `build_site.py` liest `security/asvs/` und `security/tools.yml` und rendert `SECURITY.md` und `index.html` aus denselben Daten. Beide müssen identische Zahlen und Datum enthalten.
+```sh
+mkdir -p dev/asvs-source   # gitignored
+curl -sL -o dev/asvs-source/asvs-5.0.0.flat.json \
+  "https://github.com/OWASP/ASVS/releases/download/v5.0.0_release/OWASP_Application_Security_Verification_Standard_5.0.0_en.flat.json"
+python3 -I dev/extract_asvs.py dev/asvs-source/asvs-5.0.0.flat.json dev/asvs-selection.txt dev/asvs-selected.json
+```
 
-Die Kapitel-Markdown-Tabellen sind gleichzeitig Ausgabe und Zustand für den nächsten Lauf. Ein zweiter Lauf prüft nur Einträge mit `offen` oder `teilweise` neu. Das Tabellenformat (Felder ID, Anforderung, Level, Status, Nachweis, Begründung, Geprüft am) muss deshalb von `build_site.py` stabil parsebar bleiben.
+`extract_asvs.py` exits non-zero and names the ID if a selected ID is missing or is Level 3. Then run the checker; it fails if `reference/asvs-checks.md` has drifted from the JSON.
 
-## Harte Regeln für den Skill
+## Running a skill test
 
-- Agent-neutral: keine Abhängigkeit von Tools eines bestimmten Agenten. Der Agent braucht nur: Dateien lesen, Shell ausführen, einmal eine URL laden. Skripte sind eigenständige Programme ohne Agent-SDK.
-- Der Skill ändert keinen Code im Zielprojekt. Er schreibt nur in `security/`, `SECURITY.md` und `.well-known/`. Keine Scanner installieren, keine CI ändern.
-- Status-Werte exakt: `erfüllt`, `teilweise`, `offen`, `nicht anwendbar`. `erfüllt` nie ohne Dateipfad/Zeile oder Konfigurationsschlüssel. Kein Nachweis gefunden heißt `offen`, nicht `teilweise`. Nicht relevante Kapitel werden mit Begründung `nicht anwendbar`, nicht gelöscht.
-- ASVS-Anforderungen nicht umformulieren und keine eigenen hinzufügen.
-- `TODO.md` sortiert nach ASVS-Level, Level 1 zuerst.
-- `index.html` ohne Build-Schritt und ohne externes CSS/JS. `security.txt` nach RFC 9116.
-- `description` im Frontmatter von `SKILL.md` muss die Auslöser nennen: `ASVS`, `Security-Checkliste`, `Security-Seite`, `SECURITY.md`, `Sicherheitsnachweis`.
-- Sprache der erzeugten Dateien konfigurierbar, Standard Deutsch, Englisch als Option.
+Evidence lives in `docs/superpowers/testing/` (baseline, run1, run2 on `../inv`, run on Juice Shop). Prompts are in `docs/superpowers/testing/prompts/`.
 
-## Stil der erzeugten Texte
+1. Install: `ln -sfn "$(pwd)" ~/.claude/skills/security-audit`.
+2. Start from a clean target: `git status --short` empty. A test run writes into the target repo. After a dry run reset with `git clean -fd` (check with `git clean -nd` first).
+3. Dispatch the test agent as a subagent. Subagents share this repo as cwd, so the prompt must say "read nothing outside <target> except the skill directory".
+4. The skill's two mandatory questions (scope, contact) and the existing `SECURITY.md` question cannot be answered through a relay: test agents refuse answers relayed by another agent. Put an "Owner answers" block in the prompt instead (see "Setup" in run1-inv.md). To test that the skill asks, omit the answer and check that the agent stops and asks.
+5. Check mechanically: row count 105, statuses in the four values, TODO ids equal open ids, per-chapter counts in `SECURITY.md` equal the checklist, forbidden-word grep exits 1.
+6. Record the result, including failures, in a new file under `docs/superpowers/testing/`. Fix `SKILL.md` or `reference/`, then re-run the case that failed.
 
-Kurze Sätze. Keine Gedankenstriche. Kein `nicht nur, sondern auch`. Keine Superlative oder Marketing-Sätze (`Sicherheit hat für uns höchste Priorität`). Zahlen, Dateipfade und Datumsangaben statt Adjektiven. Die Verbotsliste gehört in `SKILL.md` und wird in den Abnahmekriterien geprüft. Eine Seite mit 100 Prozent Erfüllung ist unglaubwürdig: offene Punkte werden benannt. Leere Abschnitte bleiben leer, kein Dummy-Text.
-
-## Bekannte Spannung in der Spezifikation
-
-Die Templates sind als Jinja2 (`.j2`) vorgesehen und `tools.yml` ist YAML. Beides braucht Python-Pakete außerhalb der Standardbibliothek (`jinja2`, `pyyaml`), während die Skripte eigenständig laufen sollen. Vor der Implementierung klären: Abhängigkeiten dokumentieren oder auf Standardbibliothek (z. B. `string.Template`, JSON statt YAML) ausweichen.
-
-## Testen
-
-Abnahme erfolgt gegen ein Testprojekt mit bekannten Lücken (empfohlen: OWASP Juice Shop). Die Checkliste der Abnahmekriterien steht am Ende von `handover.md`.
+Counts vary between runs (judgement of partial vs implemented). Compare statuses and Changes lines, not exact totals.

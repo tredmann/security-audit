@@ -1,3 +1,4 @@
+> Superseded by docs/superpowers/specs/2026-11-08-security-audit-skill-design.md on 2026-11-08. Kept for history.
 # Handover: ASVS-Checkliste und Security-Seite als Skill
 
 Nov 8, 2026 · @Tobias Redmann
