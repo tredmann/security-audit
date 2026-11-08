@@ -26,11 +26,11 @@ The questions in steps 2, 5 and 6 are mandatory. Ask by ending your turn with th
 2. **Confirm the scope** in one question: the project picture paragraph, then "Conditions detected: ... Conditions not detected: ... Is this correct?" Inconclusive keys go into this question.
 3. **Read existing state.** If `security/checklist.md` exists, parse it.
    - `not implemented` and `partial` rows are re-checked.
-   - `implemented` rows get a cheap evidence check: the cited file still exists and the cited pattern or key is still present; for a cited search, re-run it and compare the hit count. If that fails, the row is re-checked in full. Otherwise it is kept with its date.
+   - `implemented` rows get a cheap evidence check: run `ls` on every path the row cites, a missing path fails the row, and the cited pattern or key must still be present; for a cited search, re-run it and compare the hit count. If that fails, the row is re-checked in full. Otherwise it is kept with its date.
    - `n/a` rows: fresh scope detection wins. If a conditional group was `n/a` and detection now finds the feature, the group is checked.
    - New requirements not in the existing file are checked.
-   - The user may ask for a full re-check when invoking the skill; then every row is re-checked. On a full re-check, a status changes only when the previously cited evidence no longer holds or new evidence contradicts it. The Changes line names which.
-   - Every status change is recorded with date, old and new status in the "Changes" section. "Changes" holds only status changes, one line each, never "unchanged" lines. Changes lines are never removed or rewritten, only appended.
+   - The user may ask for a full re-check when invoking the skill; then every row is re-checked. On a full re-check, a status changes only when the previously cited evidence no longer holds or new evidence contradicts it, unless fresh detection changes the scope. The Changes line names which.
+   - Every status change is recorded with date, old and new status in the "Changes" section. "Changes" holds only status changes, one line each, never "unchanged" lines. Changes lines are added, never removed or edited.
 4. **Check.** Read the headers of `reference/asvs-checks.md` and `reference/additional-practices.md`. Per entry in scope, run "Where to look", apply "Implemented when" and "Not implemented when", fill every column. Commands: file search, `grep`, reading files, `git log` per the AP-7 recipe in `reference/additional-practices.md`, and a dependency audit (`composer audit`, `npm audit`, `pip-audit`) only if the tool is on PATH and the lock file exists. Otherwise V15.2.1 is `not implemented`, reason "not verifiable locally, run `<command>`".
 5. **Contact.** If `security/contact.md` is missing, ask once for contact address and response time (PGP key optional) and write it.
 6. **Write outputs** in one pass from the same data, so `SECURITY.md` numbers and dates match the checklist.
