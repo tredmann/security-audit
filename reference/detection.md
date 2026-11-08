@@ -68,7 +68,7 @@ Not detected when none of these exist. MFA performed only by an external identit
 
 ### idp
 The application delegates login to an external identity provider.
-Detected when login is done through SAML, OIDC or social sign-in. PHP: `laravel/socialite`, `socialiteproviders/*`, `onelogin/php-saml`, `simplesamlphp`, Node: `passport-saml`, `passport-google-oauth20`, `passport-azure-ad`, `openid-client`, `next-auth`, `@auth0/*`, `keycloak-connect`; Python: `python3-saml`, `django-allauth` socialaccount providers, `social-auth-app-django`, `authlib`, `mozilla-django-oidc`. Config keys naming an issuer, tenant or client id for sign-in.
+Detected when login is done through SAML, OIDC or social sign-in. PHP: `laravel/socialite`, `socialiteproviders/*`, `onelogin/php-saml`, `simplesamlphp`; Node: `passport-saml`, `passport-google-oauth20`, `passport-azure-ad`, `openid-client`, `next-auth`, `@auth0/*`, `keycloak-connect`; Python: `python3-saml`, `django-allauth` socialaccount providers, `social-auth-app-django`, `authlib`, `mozilla-django-oidc`. Config keys naming an issuer, tenant or client id for sign-in.
 Not detected when there is no external sign-in. Calls to third-party APIs that are not about login are not detected.
 
 ### multi-tenant
@@ -114,4 +114,4 @@ Not detected when none exist. Kubernetes manifests alone are not Compose; note t
 ### ci
 The repository has a CI definition.
 Detected when any of these exist: `.github/workflows/*.yml` or `.yaml`, `.gitlab-ci.yml`, `bitbucket-pipelines.yml`, `.circleci/config.yml`, `Jenkinsfile`, `azure-pipelines.yml`, `.drone.yml`, `.travis.yml`, `.woodpecker.yml` or `.woodpecker/*.yml`, `buildspec.yml`. Record which system (needed for AP-11, which applies to GitHub Actions only).
-Not detected when none exist; the AP-8 to AP-11 practices are then `n/a`. A CI system configured only in a hosting UI is not visible and is not detected.
+Not detected when none exist; the AP-9 to AP-11 practices are then `n/a` (AP-8 is core). A CI system configured only in a hosting UI is not visible and is not detected.
