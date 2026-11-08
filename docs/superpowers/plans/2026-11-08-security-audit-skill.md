@@ -64,12 +64,12 @@ git commit -m "chore: initial commit with handover, design and plan"
 
 **Interfaces:**
 - Produces: `dev/asvs-selected.json`: a JSON list of objects `{"id": "V6.2.1", "level": 1, "chapter_id": "V6", "chapter_name": "Authentication", "section_id": "V6.2", "section_name": "Password Security", "text": "<req_description>"}` sorted by chapter number, section number, requirement number.
-- Produces: `dev/asvs-selection.txt`: one ASVS ID per line, `#` comments allowed. Exactly the 93 IDs from the spec's core and conditional lists.
+- Produces: `dev/asvs-selection.txt`: one ASVS ID per line, `#` comments allowed. Exactly the 93 IDs from the spec's core and conditional lists (69 core, 24 conditional).
 - Produces: `python3 dev/extract_asvs.py <flat.json> <selection.txt> <out.json>`; exits non-zero and names the ID if a selected ID is missing from the source or is Level 3.
 
 - [ ] **Step 1: Write `dev/asvs-selection.txt`**
 
-Copy the 68 core and 25 conditional IDs from the spec section "Scope of checks". Use `# core: <chapter>` and `# conditional: <condition>` comment lines to group them.
+Copy the 69 core and 24 conditional IDs from the spec section "Scope of checks". Use `# core: <chapter>` and `# conditional: <condition>` comment lines to group them.
 
 - [ ] **Step 2: Write the failing tests**
 

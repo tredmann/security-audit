@@ -103,7 +103,7 @@ Branch protection was considered and dropped: it is a repository setting, not vi
 
 ### Source of requirement text
 
-The selection above is 93 requirements (68 core, 25 conditional), all Level 1 or 2 in ASVS 5.0.0. The ASVS text is taken from the official release asset `OWASP_Application_Security_Verification_Standard_5.0.0_en.flat.json` (GitHub release tag `v5.0.0_release` of `OWASP/ASVS`; the `releases/latest` redirect currently points there). The builder extracts the selected IDs once and stores them in the skill. The target project never downloads anything. ASVS is CC BY-SA 4.0; the skill's reference file carries the attribution.
+The selection above is 93 requirements (69 core, 24 conditional), all Level 1 or 2 in ASVS 5.0.0. The ASVS text is taken from the official release asset `OWASP_Application_Security_Verification_Standard_5.0.0_en.flat.json` (GitHub release tag `v5.0.0_release` of `OWASP/ASVS`; the `releases/latest` redirect currently points there). The builder extracts the selected IDs once and stores them in the skill. The target project never downloads anything. ASVS is CC BY-SA 4.0; the skill's reference file carries the attribution.
 
 ## Status model
 
