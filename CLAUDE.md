@@ -15,7 +15,7 @@ The skill has no scripts. The agent only reads files, searches and runs shell co
 Hard rules that tests and reviews rely on:
 - Status words are exactly `implemented`, `partial`, `not implemented`, `n/a`.
 - ASVS text in `reference/asvs-checks.md` is copied verbatim from the release, never reworded. IDs come from `dev/asvs-selection.txt`.
-- `SKILL.md` body stays at or under 1200 words in the body (`sed '1,/^---$/d' SKILL.md | wc -w`; currently 1183; `dev/tests/test_skill_md.py` checks it). Check the count after every edit.
+- `SKILL.md` body stays at or under 1200 words in the body (`sed '1,/^---$/d' SKILL.md | wc -w`; currently 1195; `dev/tests/test_skill_md.py` checks it). Check the count after every edit.
 - Generated texts follow the writing rules in `SKILL.md`: short sentences, no dashes, no marketing words. The forbidden-word grep in `SKILL.md` and `dev/tests/test_templates.py` is the check.
 
 ## Commands
