@@ -28,7 +28,7 @@ The paragraph must name: language and framework with versions taken from the loc
 
 ### own-auth
 The application implements its own login and credential handling.
-Detected when any of these holds. PHP/Laravel: `composer.json` requires `laravel/breeze`, `laravel/fortify`, `laravel/jetstream`, `laravel/ui` or `laravel/sanctum` with a login route, or `routes/` contains `Auth::routes(` or a login controller that calls `Auth::attempt(` or `Hash::check(`; Symfony `security.yaml` with a `form_login` or `json_login` firewall. Node: `passport-local`, `bcrypt`, `bcryptjs` or `argon2` in `package.json`, or a route handler comparing a submitted password to a stored hash. Python: Django `django.contrib.auth` with `authenticate(` or `LoginView`, `django-allauth`, Flask-Login with a password check, `fastapi-users`. Any stack: a users table migration with a `password` column.
+Detected when any of these holds. PHP/Laravel: `composer.json` requires `laravel/breeze`, `laravel/fortify`, `laravel/jetstream`, `laravel/ui` or `laravel/sanctum` with a login route, or `routes/` contains `Auth::routes(` or a login controller that calls `Auth::attempt(` or `Hash::check(`; Symfony `security.yaml` with a `form_login` or `json_login` firewall. Node: `passport-local`, `bcrypt`, `bcryptjs` or `argon2` in `package.json`, or a route handler comparing a submitted password to a stored hash. Python: Django `django.contrib.auth` with `authenticate(` or `LoginView`, `django-allauth`, Flask-Login with a password check, `fastapi-users`. A `password` column in a users migration is not enough on its own; the confirming signal is a login route or handler (Fortify, Breeze or Jetstream login routes, `Auth::routes`, Django `LoginView` or `django.contrib.auth.urls`, a Passport local strategy, a POST login route that checks a password).
 Not detected when login is only through an external provider (`idp`, `oauth-client` hits) or the application has no accounts.
 
 ### rich-text
@@ -63,12 +63,12 @@ Not detected when none of these exist.
 
 ### mfa
 The application offers or requires multi-factor authentication.
-Detected when the code implements or integrates a second factor. PHP: `pragmarx/google2fa`, `spomky-labs/otphp`, Fortify two-factor features (`two_factor_secret` column), `web-auth/webauthn-lib`; Node: `speakeasy`, `otplib`, `@simplewebauthn/server`, `passport-totp`; Python: `pyotp`, `django-otp`, `django-two-factor-auth`, `webauthn`, `fido2`. Also columns or fields named `totp_secret`, `two_factor_*`, `recovery_codes`.
+Detected when the code implements or integrates a second factor. PHP: `pragmarx/google2fa`, `spomky-labs/otphp`, Fortify two-factor features (`two_factor_secret` column), `web-auth/webauthn-lib`; Node: `speakeasy`, `otplib`, `@simplewebauthn/server`, `passport-totp`; Python: `pyotp`, `django-otp`, `django-two-factor-auth`, `webauthn`, `fido2`. Also columns or fields named `totp_secret`, `two_factor_*`, `recovery_codes`. A package or column alone is not enough: the feature must be enabled in config or routes (for example Fortify `Features::twoFactorAuthentication()`, an enrollment or verification route, `django-otp` in `INSTALLED_APPS` and middleware).
 Not detected when none of these exist. MFA performed only by an external identity provider is covered by `idp`, not by this key.
 
 ### idp
 The application delegates login to an external identity provider.
-Detected when login is done through SAML, OIDC or social sign-in. PHP: `laravel/socialite`, `socialiteproviders/*`, `onelogin/php-saml`, `simplesamlphp`, Passport as a client of another IdP; Node: `passport-saml`, `passport-google-oauth20`, `passport-azure-ad`, `openid-client`, `next-auth`, `@auth0/*`, `keycloak-connect`; Python: `python3-saml`, `django-allauth` socialaccount providers, `social-auth-app-django`, `authlib`, `mozilla-django-oidc`. Config keys naming an issuer, tenant or client id for sign-in.
+Detected when login is done through SAML, OIDC or social sign-in. PHP: `laravel/socialite`, `socialiteproviders/*`, `onelogin/php-saml`, `simplesamlphp`, Node: `passport-saml`, `passport-google-oauth20`, `passport-azure-ad`, `openid-client`, `next-auth`, `@auth0/*`, `keycloak-connect`; Python: `python3-saml`, `django-allauth` socialaccount providers, `social-auth-app-django`, `authlib`, `mozilla-django-oidc`. Config keys naming an issuer, tenant or client id for sign-in.
 Not detected when there is no external sign-in. Calls to third-party APIs that are not about login are not detected.
 
 ### multi-tenant
@@ -89,7 +89,7 @@ Not detected when none of these exist.
 ### webserver-config
 Web server or proxy configuration is part of the repository.
 Detected when the repository contains configuration for a web server or proxy that serves the application: `nginx.conf`, `nginx/*.conf`, `conf.d/*.conf`, `sites-available/*`, `default.conf`, Apache `httpd.conf`, `apache2.conf`, `*.vhost`, `.htaccess`, `Caddyfile`, `traefik.yml`, `haproxy.cfg`, Compose volumes mounting such files, Dockerfile `COPY` lines that copy them.
-Not detected when none exist. A framework skeleton `public/.htaccess` that only holds rewrite rules is not web server configuration for these checks (note it in the project picture). Hosting-panel settings outside the repository are not visible and are not detected.
+Not detected when none exist. A `public/.htaccess` counts (V13.4.3 reads `Options -Indexes` there). Hosting-panel settings outside the repository are not visible and are not detected.
 
 ### browser-storage
 Front-end code stores data in browser storage.
@@ -104,7 +104,7 @@ Not detected when Node is used only to build the front end (webpack, Vite, Mix) 
 ### dockerfile
 The repository builds container images.
 Detected when files matching `**/Dockerfile*` or `**/*.dockerfile` exist (excluding `vendor/` and `node_modules/`), or a Compose `build:` key points at a context with such a file. Record the path of each.
-Not detected when none exist. A Compose file that only uses prebuilt `image:` entries is not a Dockerfile match; AP-1, AP-2 and AP-5 are `n/a`, AP-3 and AP-4 still apply through `compose`.
+Not detected when none exist. A Compose file that only uses prebuilt `image:` entries is not a Dockerfile match; AP-1, AP-2 and AP-5 are `n/a` (AP-2 covers `FROM` lines only), AP-3 and AP-4 still apply through `compose`.
 
 ### compose
 The repository defines a Compose stack.
