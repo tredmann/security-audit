@@ -1,0 +1,123 @@
+# ASVS 5.0 requirements selected for the security audit skill.
+# Source: docs/superpowers/specs/2026-11-08-security-audit-skill-design.md, "Scope of checks".
+# One ID per line. Lines starting with # are comments.
+
+# core: Injection and encoding (V1)
+V1.2.1
+V1.2.3
+V1.2.4
+V1.2.5
+V1.3.2
+V1.5.2
+# core: Input validation (V2)
+V2.2.1
+V2.2.2
+V2.4.1
+# core: Cookies, headers, CSRF (V3)
+V3.3.1
+V3.3.2
+V3.3.4
+V3.4.1
+V3.4.2
+V3.4.3
+V3.4.4
+V3.4.6
+V3.5.1
+V3.5.3
+V3.7.2
+# core: Authentication (V6, applies when the app has its own login)
+V6.2.1
+V6.2.2
+V6.2.3
+V6.2.4
+V6.2.5
+V6.3.1
+V6.3.2
+V6.3.3
+V6.4.1
+V6.4.2
+V6.4.3
+# core: Sessions (V7)
+V7.2.1
+V7.2.3
+V7.2.4
+V7.3.1
+V7.3.2
+V7.4.1
+V7.4.3
+V7.5.1
+# core: Authorization (V8)
+V8.2.1
+V8.2.2
+V8.3.1
+# core: Cryptography (V11)
+V11.3.1
+V11.3.2
+V11.4.1
+V11.4.2
+V11.5.1
+# core: Transport (V12)
+V12.3.1
+V12.3.2
+# core: Configuration (V13)
+V13.2.2
+V13.2.3
+V13.3.1
+V13.4.1
+V13.4.2
+V13.4.5
+# core: Data protection (V14)
+V14.2.1
+V14.3.2
+# core: Dependencies and defensive coding (V15)
+V15.1.2
+V15.2.1
+V15.2.3
+V15.3.1
+V15.3.3
+V15.3.4
+V15.3.5
+# core: Logging and errors (V16)
+V16.2.5
+V16.3.1
+V16.3.2
+V16.4.1
+V16.5.1
+# conditional: Rich-text / WYSIWYG input
+V1.3.1
+# conditional: Outbound requests to user-supplied URLs
+V1.3.6
+# conditional: Sends e-mail with user-supplied content
+V1.3.11
+# conditional: Parses XML
+V1.5.1
+# conditional: GraphQL API
+V4.3.1
+V4.3.2
+# conditional: File uploads
+V5.2.1
+V5.2.2
+V5.3.1
+V5.3.2
+V5.4.1
+# conditional: Multi-factor authentication
+V6.5.1
+V6.5.3
+# conditional: External identity provider (SAML/OIDC)
+V6.8.2
+# conditional: Multi-tenant
+V8.4.1
+# conditional: JWT or other self-contained tokens
+V9.1.1
+V9.1.2
+V9.2.1
+V9.2.3
+# conditional: OAuth client
+V10.2.1
+# conditional: Web server config committed (nginx, Apache, Caddy)
+V12.1.1
+V13.4.3
+# conditional: Browser frontend with client-side storage
+V14.3.3
+# conditional: Node.js backend
+V15.3.6
