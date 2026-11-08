@@ -40,5 +40,22 @@ class CheckReferenceTests(unittest.TestCase):
         p = self.run_tool(GOOD.replace("own-auth", "login"))
         self.assertEqual(p.returncode, 1); self.assertIn("login", p.stdout)
 
+    def test_new_condition_keys_pass(self):
+        for key in ("dockerfile", "compose", "ci"):
+            p = self.run_tool(GOOD.replace("core, own-auth", "conditional: " + key))
+            self.assertEqual(p.returncode, 0, key)
+
+    def test_empty_field_body_fails(self):
+        p = self.run_tool(GOOD.replace("**Where to look:** registration validation.", "**Where to look:**"))
+        self.assertEqual(p.returncode, 1); self.assertIn("field: V6.2.1 Where to look", p.stdout)
+
+    def test_level_mismatch_fails(self):
+        p = self.run_tool(GOOD.replace("Level 1", "Level 2"))
+        self.assertEqual(p.returncode, 1); self.assertIn("level: V6.2.1 Level 2 Level 1", p.stdout)
+
+    def test_duplicate_id_fails(self):
+        p = self.run_tool(GOOD + GOOD)
+        self.assertEqual(p.returncode, 1); self.assertIn("duplicate: V6.2.1", p.stdout)
+
 if __name__ == "__main__":
     unittest.main()

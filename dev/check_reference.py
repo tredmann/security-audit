@@ -3,7 +3,7 @@
 Usage: python3 dev/check_reference.py <reference.md> <selected.json>
 
 Stdlib only. Prints one line per problem and exits 1; exits 0 when clean.
-Problem prefixes: missing, unknown, duplicate, reworded, field, condition.
+Problem prefixes: missing, unknown, duplicate, reworded, field, condition, level.
 """
 import json
 import re
@@ -12,7 +12,7 @@ import sys
 CONDITIONS = {
     "own-auth", "rich-text", "outbound-urls", "mail", "xml", "graphql", "uploads",
     "mfa", "idp", "multi-tenant", "jwt", "oauth-client", "webserver-config",
-    "browser-storage", "node-backend",
+    "browser-storage", "node-backend", "dockerfile", "compose", "ci",
 }
 
 FIELDS = ["Requirement", "Where to look", "Implemented when", "Not implemented when"]
@@ -81,11 +81,15 @@ def check(entries, selected):
         bad = header_problem(e["header"])
         if bad is not None:
             problems.append(f"condition: {req_id} {bad}")
+        header_level = e["header"].split(",")[0].strip()
+        official = f"Level {sel_by_id[req_id]['level']}"
+        if LEVEL_RE.match(header_level) and header_level != official:
+            problems.append(f"level: {req_id} {header_level} {official}")
         req_text = e["fields"].get("Requirement")
         if req_text is not None and req_text != sel_by_id[req_id]["text"]:
             problems.append(f"reworded: {req_id}")
         for name in FIELDS:
-            if name not in e["fields"]:
+            if not e["fields"].get(name):
                 problems.append(f"field: {req_id} {name}")
     present = {e["id"] for e in entries}
     for req_id in sel_by_id:
