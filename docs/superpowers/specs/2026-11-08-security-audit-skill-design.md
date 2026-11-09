@@ -53,6 +53,7 @@ A requirement is included only if an agent can judge it from what is in the repo
 Injection and encoding (V1): V1.2.1, V1.2.3, V1.2.4, V1.2.5, V1.3.2, V1.5.2
 Input validation (V2): V2.2.1, V2.2.2, V2.4.1
 Cookies, headers, CSRF (V3): V3.3.1, V3.3.2, V3.3.4, V3.4.1, V3.4.2, V3.4.3, V3.4.4, V3.4.6, V3.5.1, V3.5.3, V3.7.2
+File paths (V5): V5.3.2 (path traversal happens without uploads too; moved from the uploads group on 2026-11-09)
 Authentication (V6, applies when the app has its own login): V6.2.1, V6.2.2, V6.2.3, V6.2.4, V6.2.5, V6.3.1, V6.3.2, V6.3.3, V6.4.1, V6.4.2, V6.4.3
 Sessions (V7): V7.2.1, V7.2.3, V7.2.4, V7.3.1, V7.3.2, V7.4.1, V7.4.3, V7.5.1
 Authorization (V8): V8.2.1, V8.2.2, V8.3.1
@@ -72,7 +73,7 @@ Logging and errors (V16): V16.2.5, V16.3.1, V16.3.2, V16.4.1, V16.5.1
 | Sends e-mail with user-supplied content | V1.3.11 |
 | Parses XML | V1.5.1 |
 | GraphQL API | V4.3.1, V4.3.2 |
-| File uploads | V5.2.1, V5.2.2, V5.3.1, V5.3.2, V5.4.1 |
+| File uploads | V5.2.1, V5.2.2, V5.3.1, V5.4.1 |
 | Multi-factor authentication | V6.5.1, V6.5.3 |
 | External identity provider (SAML/OIDC) | V6.8.2 |
 | Multi-tenant | V8.4.1 |
@@ -103,7 +104,7 @@ Branch protection was considered and dropped: it is a repository setting, not vi
 
 ### Source of requirement text
 
-The selection above is 93 requirements (69 core, 24 conditional), all Level 1 or 2 in ASVS 5.0.0. The ASVS text is taken from the official release asset `OWASP_Application_Security_Verification_Standard_5.0.0_en.flat.json` (GitHub release tag `v5.0.0_release` of `OWASP/ASVS`; the `releases/latest` redirect currently points there). The builder extracts the selected IDs once and stores them in the skill. The target project never downloads anything. ASVS is CC BY-SA 4.0; the skill's reference file carries the attribution.
+The selection above is 93 requirements (70 core, 23 conditional), all Level 1 or 2 in ASVS 5.0.0. The ASVS text is taken from the official release asset `OWASP_Application_Security_Verification_Standard_5.0.0_en.flat.json` (GitHub release tag `v5.0.0_release` of `OWASP/ASVS`; the `releases/latest` redirect currently points there). The builder extracts the selected IDs once and stores them in the skill. The target project never downloads anything. ASVS is CC BY-SA 4.0; the skill's reference file carries the attribution.
 
 ## Status model
 

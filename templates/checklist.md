@@ -2,6 +2,7 @@
 
 ASVS version: 5.0.0
 Target level: 2
+Requirement text from OWASP ASVS 5.0.0, CC BY-SA 4.0.
 Last run: <YYYY-MM-DD>
 
 Project: <project paragraph>

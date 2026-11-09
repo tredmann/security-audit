@@ -1,7 +1,8 @@
-<!-- Regenerated on every run of the security-audit skill. Hand edits are lost. -->
 # Security TODO
 
-Open items from the latest security audit. Each entry lists one requirement that is partial or not implemented.
+Open items from the latest security audit. Each entry lists one requirement that is partial or not implemented. Regenerated on every run of the security-audit skill; hand edits are lost.
+
+Requirement text from OWASP ASVS 5.0.0, CC BY-SA 4.0.
 
 ## Level 1
 

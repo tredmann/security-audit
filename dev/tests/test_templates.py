@@ -25,6 +25,10 @@ class TemplateTests(unittest.TestCase):
         self.assertNotIn("<AP-n>", t)
         self.assertIn("available to customers on request", t)
 
+    def test_templates_quoting_asvs_carry_attribution(self):
+        for name in ["checklist.md", "TODO.md", "SECURITY.md"]:
+            self.assertIn("Requirement text from OWASP ASVS 5.0.0, CC BY-SA 4.0.", Path("templates", name).read_text(), name)
+
     def test_checklist_template_has_table_header_and_changes(self):
         t = Path("templates/checklist.md").read_text()
         self.assertIn("| ID | Level | Requirement | Status | Evidence | Reason | Checked |", t)
