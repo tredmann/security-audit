@@ -36,7 +36,7 @@ The questions in steps 2, 5 and 6 are mandatory. Ask by ending your turn with th
 5. **Contact.** If `security/contact.md` is missing, ask once for contact address and response time (PGP key optional) and write it.
 6. **Write outputs** in one pass from the same data, so `SECURITY.md` numbers and dates match the checklist. Every run rewrites `security/TODO.md` and the generated block from the templates; never keep the previous block.
    - `security/TODO.md`: every `not implemented` and `partial` row; Level 1, Level 2, then practices headed `### AP-7 (AP) <short practice>`.
-   - `SECURITY.md`: the project summary is the project picture without component versions, file paths or line citations. Open items' short text: the requirement's first clause, unreworded, up to the first comma or period; for a practice, its title. Checked = all rows of the chapter = implemented + partial + not implemented + n/a. One row per practice. Changes newest first; on a first run the Changes section of both `SECURITY.md` and `security/checklist.md` reads "None yet."
+   - `SECURITY.md`: the project summary is the project picture without component versions, file paths or line citations. No IDs: open items, practices and Changes are counts only. Checked = all rows of the chapter = implemented + partial + not implemented + n/a. Changes: one line per date, newest first; on a first run the Changes section of both `SECURITY.md` and `security/checklist.md` reads "None yet."
    - The generated block sits between `<!-- security-audit:start -->` and `<!-- security-audit:end -->`; everything outside is preserved byte for byte. Existing `SECURITY.md` without markers: ask once, replace or append.
 7. **Report** counts per status, open Level 1 items, paths written, and remind that `security/checklist.md` and `security/TODO.md` map unfixed weaknesses and stay private while open items remain; `SECURITY.md` is meant to be public.
 
@@ -59,11 +59,11 @@ Never write a secret value into any output. Cite the path, and for git history t
 | "`http_only => true` shows it." | Evidence is `path:line`. |
 | "The team's docs say backups are tested." | Docs are claims. Check code or config. |
 | "No status changed, keep `SECURITY.md`." | Rewrite the block; rules and templates change. |
-| "The detail helps the customer." | `SECURITY.md` gets IDs, short text, counts, dates. No paths, no exploit detail. |
+| "The detail helps the customer." | `SECURITY.md` gets counts and dates. IDs name unfixed weaknesses; customers ask for the list. |
 
 ## Writing rules
 
-Short sentences. Numbers and dates instead of adjectives; in the internal files also paths. A sentence that could stand in another project's `SECURITY.md` is removed, except the fixed headings, the disclaimer, the "Checked against" sentence and the attribution line. Empty section: one line "None yet." Replace every `<...>` placeholder.
+Short sentences. Numbers and dates instead of adjectives; in the internal files also paths. A sentence that could stand in another project's `SECURITY.md` is removed, except the fixed headings, the disclaimer, the "Checked against" sentence, the on-request sentence and the attribution line. Empty section: one line "None yet." Replace every `<...>` placeholder.
 
 Final self-check; exit 1 means clean, a match means rewrite and run again, exit 2 means a file is missing (an error):
 

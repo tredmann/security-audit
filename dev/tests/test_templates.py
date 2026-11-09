@@ -19,6 +19,12 @@ class TemplateTests(unittest.TestCase):
         self.assertIn("It is not a penetration test", t)
         self.assertLess(t.index("<!-- security-audit:end -->"), t.index("## Further evidence"))
 
+    def test_security_template_names_no_ids(self):
+        t = Path("templates/SECURITY.md").read_text()
+        self.assertNotIn("<ID>", t)
+        self.assertNotIn("<AP-n>", t)
+        self.assertIn("available to customers on request", t)
+
     def test_checklist_template_has_table_header_and_changes(self):
         t = Path("templates/checklist.md").read_text()
         self.assertIn("| ID | Level | Requirement | Status | Evidence | Reason | Checked |", t)

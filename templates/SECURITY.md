@@ -40,15 +40,13 @@ Requirement text from OWASP ASVS 5.0.0, CC BY-SA 4.0.
 | V16 Security Logging and Error Handling | <n> | <n> | <n> | <n> | <n> |
 | Total | <n> | <n> | <n> | <n> | <n> |
 
-Open and partial items:
-
-- <ID>: <short text>
+Open items (partial or not implemented): <n>. Level 1: <n>. Level 2: <n>. The list of open items is available to customers on request.
 
 ## Additional practices
 
-| ID | Practice | Status | Reference |
-|---|---|---|---|
-| <AP-n> | <short practice> | <status> | <reference> |
+| Practices | Checked | Implemented | Partial | Not implemented | n/a |
+|---|---|---|---|---|---|
+| AP-1 to AP-12 | 12 | <n> | <n> | <n> | <n> |
 
 ## Reporting a vulnerability
 
@@ -58,8 +56,8 @@ PGP key: <fingerprint or URL, or delete this line>
 
 ## Changes
 
-<!-- First run: this section is the single line "None yet." -->
-- <YYYY-MM-DD> <ID> <old> → <new>: <one sentence>
+<!-- First run: this section is the single line "None yet." One line per date in the Changes of security/checklist.md, counts by new status, zero counts left out, no IDs. -->
+- <YYYY-MM-DD>: <n> now implemented, <n> now partial, <n> now not implemented, <n> now n/a
 
 <!-- security-audit:end -->
 

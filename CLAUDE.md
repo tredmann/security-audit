@@ -15,13 +15,13 @@ The skill has no scripts. The agent only reads files, searches and runs shell co
 Hard rules that tests and reviews rely on:
 - Status words are exactly `implemented`, `partial`, `not implemented`, `n/a`.
 - ASVS text in `reference/asvs-checks.md` is copied verbatim from the release, never reworded. IDs come from `dev/asvs-selection.txt`.
-- `SKILL.md` body stays at or under 1200 words in the body (`sed '1,/^---$/d' SKILL.md | wc -w`; currently 1199; `dev/tests/test_consistency.py` checks it). Check the count after every edit.
+- `SKILL.md` body stays at or under 1200 words in the body (`sed '1,/^---$/d' SKILL.md | wc -w`; currently 1193; `dev/tests/test_consistency.py` checks it). Check the count after every edit.
 - Generated texts follow the writing rules in `SKILL.md`: short sentences, no dashes, no marketing words. The forbidden-word grep in `SKILL.md` and `dev/tests/test_templates.py` is the check.
 
 ## Commands
 
 ```sh
-python3 -m unittest discover -s dev/tests -v                                  # 24 tests
+python3 -m unittest discover -s dev/tests -v                                  # 25 tests
 python3 -I dev/check_reference.py reference/asvs-checks.md dev/asvs-selected.json   # exit 0 = consistent
 ```
 
@@ -55,12 +55,9 @@ Parked at the final review of v1, not yet fixed. Start here before re-reviewing.
 
 Minor fixes:
 - `SKILL.md` says "never cite an unlisted path", but AP-7 cites paths from git history. Decide the scope of the rule.
-- Public open-item text uses the first clause of the requirement, which can cut the meaning. Use the ASVS section name instead.
-- "Every run rewrites the generated `SECURITY.md` block" needs "carry Changes lines over verbatim".
 - Which HTML comments from the templates are copied into the output is undefined.
 
 Decisions for the owner:
-- The public `SECURITY.md` lists open items by ASVS ID, which names unfixed weaknesses. Keep, or show counts only?
 - The contact question is asked in step 5. It could move to step 2, next to the scope question.
 - "Loads in Codex and Cursor" is unverified; neither is installed here.
 - V5.3.2 (path traversal) is gated on the `uploads` condition.

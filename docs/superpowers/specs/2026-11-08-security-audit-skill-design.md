@@ -34,7 +34,7 @@ The skill does not say the system is secure. It documents which requirements wer
 ## Anti-goals
 
 - A `SECURITY.md` that reads like marketing. Sentences such as "security is our top priority" must not appear.
-- 100 % compliance claims. Open items are listed, not hidden.
+- 100 % compliance claims. Open items are counted publicly, not hidden; the list is given to customers on request.
 - Inventing requirements or rewording ASVS text. Requirement text is quoted from the ASVS 5.0 release.
 - Guessing. If evidence cannot be found in the repo, the status is `not implemented`, not `partial`.
 
@@ -179,10 +179,10 @@ Generated from `checklist.md` and `contact.md`. Sections, in order:
 
 1. **About this document.** Three sentences: what the system is (from the project picture), that it is checked against ASVS 5.0 Level 2 (curated subset), date of the last check.
 2. **Scope.** Which chapters and conditional groups were checked, which were not and why. One sentence stating that the check is a self-assessment from the source code, not a penetration test.
-3. **Results.** Table per chapter: chapter name, requirements checked, implemented, partial, not implemented, n/a. One summary row. Followed by a list of all `not implemented` and `partial` items with ID and short requirement text. No evidence paths here (they are internal).
-4. **Additional practices.** Same table shape for AP-1 to AP-12, with the reference column.
+3. **Results.** Table per chapter: chapter name, requirements checked, implemented, partial, not implemented, n/a. One summary row. Followed by the count of open items (`not implemented` plus `partial`), split by Level 1 and Level 2, and the sentence that the list is available to customers on request. No IDs and no evidence paths here: IDs of open items name unfixed weaknesses, so the list stays in the internal files (decided 2026-11-09).
+4. **Additional practices.** One row of counts for AP-1 to AP-12, in the same column shape as the results table. No per-practice status.
 5. **Reporting a vulnerability.** Contact, response time, PGP key if any. From `contact.md`.
-6. **Changes.** The "Changes" list from `checklist.md`, newest first.
+6. **Changes.** One line per date of the "Changes" list in `checklist.md`, newest first, with counts by new status and no IDs.
 7. **Further evidence.** Heading only, with one line: "No external assessments yet." when empty. Replaced by the user when a pentest report or badge exists.
 
 Numbers and dates in `SECURITY.md` must match `checklist.md` exactly. If the agent writes both in one run from the same data this holds by construction; the skill says so explicitly.
@@ -194,7 +194,7 @@ Numbers and dates in `SECURITY.md` must match `checklist.md` exactly. If the age
 - Short sentences. No em dashes or en dashes used as sentence punctuation.
 - No superlatives, no "not only ... but also", no "robust", "state of the art", "best in class", "industry leading", "cutting edge", "top priority", "take security seriously", "committed to", "world class", "enterprise grade", "military grade", "bank level". `SKILL.md` carries this list; the agent re-reads its output against it before finishing.
 - Numbers, file paths and dates instead of adjectives.
-- If a sentence could stand unchanged in another project's `SECURITY.md`, it says nothing and is removed. Exception: the fixed section headings and the self-assessment disclaimer.
+- If a sentence could stand unchanged in another project's `SECURITY.md`, it says nothing and is removed. Exception: the fixed section headings, the self-assessment disclaimer and the on-request sentence.
 - Empty sections stay empty with a one-line "none yet" statement. No placeholder prose.
 
 ## Skill structure

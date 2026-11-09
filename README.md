@@ -42,7 +42,7 @@ Open your agent in the project and ask for a security audit, an ASVS check or a 
 
 ## Privacy
 
-`security/checklist.md` and `security/TODO.md` list unfixed weaknesses with file locations. Do not publish them while open items remain. `SECURITY.md` contains no file paths and is meant to be public.
+`security/checklist.md` and `security/TODO.md` list unfixed weaknesses with file locations. Do not publish them while open items remain. `SECURITY.md` contains counts, no requirement IDs and no file paths, and is meant to be public. Send the checklist to a customer who asks for the list of open items.
 
 ## Licence
 
