@@ -64,4 +64,3 @@ Decisions for the owner:
 - The contact question is asked in step 5. It could move to step 2, next to the scope question.
 - "Loads in Codex and Cursor" is unverified; neither is installed here.
 - V5.3.2 (path traversal) is gated on the `uploads` condition.
-- The licence of this repo is undecided (`README.md`).

@@ -46,7 +46,7 @@ Open your agent in the project and ask for a security audit, an ASVS check or a 
 
 ## Licence
 
-The ASVS requirement text is by OWASP under CC BY-SA 4.0 (https://github.com/OWASP/ASVS). The licence for the rest of this repository is not decided yet.
+MIT, see `LICENSE`. Exception: `reference/asvs-checks.md` and `dev/asvs-selected.json` contain ASVS requirement text by OWASP and are under CC BY-SA 4.0 (https://github.com/OWASP/ASVS).
 
 ## Development
 
