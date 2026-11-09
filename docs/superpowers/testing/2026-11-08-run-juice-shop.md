@@ -30,7 +30,7 @@ Quotes are from `security/checklist.md` (Scope table and project line).
 - `implemented` rows with empty Evidence: none.
 - Open rows 87 = TODO.md entries 87, same ID set (script).
 - SECURITY.md Results table totals 93 | 7 | 13 | 66 | 7 and per-chapter rows equal the checklist totals (read; V15 row 8|1|3|4|0 matches the TODO list).
-- Forbidden-word grep (command as in run1-inv "Exact commands"): exit 1.
+- Forbidden-word grep (command from `SKILL.md`): exit 1.
 - Secret values: fixed-string pattern file built from the committed key material and secret literals in `lib/insecurity.ts` and `encryptionkeys/*` (8 patterns, deleted afterwards) against the four outputs: exit 1. (A first attempt had an empty pattern file and was discarded.)
 - Append path: first N bytes of SECURITY.md (N = size of original) are identical to the original (`cmp`), markers at lines 128 and 292; `git status --short`: ` M SECURITY.md`, `?? security/`; no application file changed.
 - AP-12 `implemented`: "SECURITY.md:20 names a reporting e-mail address outside the generated block (existing text, preserved)."

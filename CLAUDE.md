@@ -38,13 +38,13 @@ python3 -I dev/extract_asvs.py dev/asvs-source/asvs-5.0.0.flat.json dev/asvs-sel
 
 ## Running a skill test
 
-Evidence lives in `docs/superpowers/testing/` (baseline, run1, run2 on `../inv`, run on Juice Shop). Prompts are in `docs/superpowers/testing/prompts/`.
+Evidence lives in `docs/superpowers/testing/`. Runs on the private acceptance target `../inv` are not kept in the repo, because they list that project's open weaknesses. Prompts are in `docs/superpowers/testing/prompts/`.
 
 1. Install: `ln -sfn "$(pwd)" ~/.claude/skills/security-audit`.
 2. Start from a clean target: `git status --short` empty. A test run writes into the target repo. After a run reset only the skill's outputs: `git clean -fd -- security SECURITY.md` (check with `git clean -nd -- security SECURITY.md` first), plus `git checkout -- SECURITY.md` when the target already tracked a `SECURITY.md`.
 3. Dispatch the test agent as a subagent. Subagents share this repo as cwd, so the prompt must say "read nothing outside <target> except the skill directory".
-4. The skill's three questions (scope, contact, existing `SECURITY.md`) cannot be answered through a relay: test agents refuse answers relayed by another agent. Put an "Owner answers" block in the prompt instead (see "Owner answers pre-supplied" in run1-inv.md). To test that the skill asks, omit the answer and check that the agent stops and asks.
-5. Check mechanically: row count 105, statuses in the 4 values, TODO ids equal open ids, per-chapter counts in `SECURITY.md` equal the checklist, forbidden-word grep exits 1.
+4. The skill's three questions (scope, contact, existing `SECURITY.md`) cannot be answered through a relay: test agents refuse answers relayed by another agent. Put an "Owner answers" block in the prompt instead (`docs/superpowers/testing/prompts/owner-answers.md`). To test that the skill asks, omit the answer and check that the agent stops and asks.
+5. Check mechanically: row count 105, statuses in the 4 values, TODO ids equal open ids, per-chapter counts in `SECURITY.md` equal the checklist, forbidden-word grep from `SKILL.md` exits 1.
 6. Record the result, including failures, in a new file under `docs/superpowers/testing/`. Fix `SKILL.md` or `reference/`, then re-run the case that failed.
 
 Counts vary between runs (judgement of partial vs implemented). Compare statuses and Changes lines, not exact totals.
@@ -54,7 +54,6 @@ Counts vary between runs (judgement of partial vs implemented). Compare statuses
 Parked at the final review of v1, not yet fixed. Start here before re-reviewing.
 
 Minor fixes:
-- AP-7 (`reference/additional-practices.md`): the redacting inspection command still prints PEM and token lines unredacted.
 - `SKILL.md` says "never cite an unlisted path", but AP-7 cites paths from git history. Decide the scope of the rule.
 - Public open-item text uses the first clause of the requirement, which can cut the meaning. Use the ASVS section name instead.
 - "Every run rewrites the generated `SECURITY.md` block" needs "carry Changes lines over verbatim".
