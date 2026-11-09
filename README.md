@@ -24,21 +24,33 @@ It changes no code, configuration or CI and installs nothing.
 Claude Code:
 
 ```sh
-ln -sfn /path/to/this/repo ~/.claude/skills/security-audit
+mkdir -p ~/.claude/skills
+git clone https://github.com/tredmann/security-audit.git ~/.claude/skills/security-audit
 ```
+
+Update later with `git -C ~/.claude/skills/security-audit pull`.
 
 Agents that read `~/.agents/skills/`:
 
 ```sh
 mkdir -p ~/.agents/skills
-ln -sfn /path/to/this/repo ~/.agents/skills/security-audit
+git clone https://github.com/tredmann/security-audit.git ~/.agents/skills/security-audit
 ```
+
+Working on the skill itself: clone it anywhere and link it instead, `ln -sfn "$(pwd)" ~/.claude/skills/security-audit` from the clone.
 
 Verified only on Claude Code. Not verified on a second agent: neither Codex nor Cursor CLI was available when this was written.
 
 ## Use
 
-Open your agent in the project and ask for a security audit, an ASVS check or a `SECURITY.md`. The skill asks you 2 questions (is the detected project scope correct, who is the security contact) and, if needed, a 3rd about an existing `SECURITY.md`. It waits for your answers.
+Open your agent in the project and ask for a security audit, an ASVS check or a `SECURITY.md`. With Claude Code:
+
+```sh
+cd /path/to/your/project
+claude "Run a security audit of this repository"
+```
+
+The skill asks you 2 questions (is the detected project scope correct, who is the security contact) and, if needed, a 3rd about an existing `SECURITY.md`. It waits for your answers.
 
 ## Privacy
 
