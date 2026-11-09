@@ -50,4 +50,4 @@ MIT, see `LICENSE`. Exception: `reference/asvs-checks.md` and `dev/asvs-selected
 
 ## Development
 
-See `CLAUDE.md` for tests, regenerating the ASVS selection and running skill tests. Test records are in `docs/superpowers/testing/`.
+See `CLAUDE.md` for tests, regenerating the ASVS selection and running skill tests.

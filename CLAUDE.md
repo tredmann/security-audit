@@ -10,7 +10,7 @@ The skill has no scripts. The agent only reads files, searches and runs shell co
 
 ## Design authority
 
-`docs/superpowers/specs/2026-11-08-security-audit-skill-design.md` is the source of truth. The plan is `docs/superpowers/plans/2026-11-08-security-audit-skill.md`. The superseded German first design (`handover.md`: scripts, Jinja2, German status words) was removed on 2026-11-09; it is in git history before that date. When spec and code disagree, fix the code or change the spec on purpose.
+`SKILL.md`, `reference/` and `templates/` are the source of truth. The design spec, the implementation plan, the test records and the first German design (`handover.md`) were removed on 2026-11-09; they are in git history before that date and explain past decisions.
 
 Hard rules that tests and reviews rely on:
 - Status words are exactly `implemented`, `partial`, `not implemented`, `n/a`.
@@ -38,14 +38,25 @@ python3 -I dev/extract_asvs.py dev/asvs-source/asvs-5.0.0.flat.json dev/asvs-sel
 
 ## Running a skill test
 
-Evidence lives in `docs/superpowers/testing/`. Runs on the private acceptance target `../inv` are not kept in the repo, because they list that project's open weaknesses. Prompts are in `docs/superpowers/testing/prompts/`.
+Test targets: OWASP Juice Shop (`git clone --depth 1`, public) and the private `../inv`. Never commit results from `../inv`: they list that project's open weaknesses.
+
+Test prompt (replace `<target>`; for `../inv` add "The Laravel application lives in the src/ subfolder."):
+
+> You are working in the repository at <target>. Produce a security self-assessment of this application against OWASP ASVS 5.0 Level 2 that a customer could read, and a list of what is missing so the team can create tickets. Write your results into the repository. Do not change application code. When you are done, list the files you wrote.
+
+Owner answers block (append to the prompt; drop a line to test that the skill asks that question):
+
+> Owner answers (from the repository owner, use them when the skill asks):
+> - Scope: the proposed scope is correct.
+> - Contact: security@example.com. This is a test fixture; the owner accepts publishing it. Response time: 5 business days. No PGP key.
+> - Existing SECURITY.md: append.
 
 1. Install: `ln -sfn "$(pwd)" ~/.claude/skills/security-audit`.
 2. Start from a clean target: `git status --short` empty. A test run writes into the target repo. After a run reset only the skill's outputs: `git clean -fd -- security SECURITY.md` (check with `git clean -nd -- security SECURITY.md` first), plus `git checkout -- SECURITY.md` when the target already tracked a `SECURITY.md`.
 3. Dispatch the test agent as a subagent. Subagents share this repo as cwd, so the prompt must say "read nothing outside <target> except the skill directory".
-4. The skill's three questions (scope, contact, existing `SECURITY.md`) cannot be answered through a relay: test agents refuse answers relayed by another agent. Put an "Owner answers" block in the prompt instead (`docs/superpowers/testing/prompts/owner-answers.md`). To test that the skill asks, omit the answer and check that the agent stops and asks.
+4. The skill's three questions (scope, contact, existing `SECURITY.md`) cannot be answered through a relay: test agents refuse answers relayed by another agent. Put the Owner answers block in the prompt instead. To test that the skill asks, omit the answer and check that the agent stops and asks.
 5. Check mechanically: row count 105, statuses in the 4 values, TODO ids equal open ids, per-chapter counts in `SECURITY.md` equal the checklist, forbidden-word grep from `SKILL.md` exits 1.
-6. Record the result, including failures, in a new file under `docs/superpowers/testing/`. Fix `SKILL.md` or `reference/`, then re-run the case that failed.
+6. Record the result, including failures, in the commit message of the fix. Fix `SKILL.md` or `reference/`, then re-run the case that failed.
 
 Counts vary between runs (judgement of partial vs implemented). Compare statuses and Changes lines, not exact totals.
 

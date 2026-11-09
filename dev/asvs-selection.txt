@@ -1,5 +1,4 @@
 # ASVS 5.0 requirements selected for the security audit skill.
-# Source: docs/superpowers/specs/2026-11-08-security-audit-skill-design.md, "Scope of checks".
 # One ID per line. Lines starting with # are comments.
 
 # core: Injection and encoding (V1)
