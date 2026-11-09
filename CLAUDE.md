@@ -10,7 +10,7 @@ The skill has no scripts. The agent only reads files, searches and runs shell co
 
 ## Design authority
 
-`docs/superpowers/specs/2026-11-08-security-audit-skill-design.md` is the source of truth. The plan is `docs/superpowers/plans/2026-11-08-security-audit-skill.md`. `handover.md` is the superseded German first design (scripts, Jinja2, German status words); read it for history only. When spec and code disagree, fix the code or change the spec on purpose.
+`docs/superpowers/specs/2026-11-08-security-audit-skill-design.md` is the source of truth. The plan is `docs/superpowers/plans/2026-11-08-security-audit-skill.md`. The superseded German first design (`handover.md`: scripts, Jinja2, German status words) was removed on 2026-11-09; it is in git history before that date. When spec and code disagree, fix the code or change the spec on purpose.
 
 Hard rules that tests and reviews rely on:
 - Status words are exactly `implemented`, `partial`, `not implemented`, `n/a`.

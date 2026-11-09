@@ -2,7 +2,7 @@
 
 Date: 2026-11-08
 Status: approved 2026-11-08, implemented on branch feat/security-audit-skill
-Supersedes: `handover.md` where the two disagree (see "Changes from the handover").
+Supersedes: `handover.md`, the first design, removed on 2026-11-09 (see "Changes from the handover").
 
 ## Intent
 
